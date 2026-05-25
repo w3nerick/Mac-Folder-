@@ -12,38 +12,39 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  /* ── Editorial palette — warm paper, ink, single sienna accent ── */
-  --paper:       #EFE8D8;  /* page background — aged paper */
-  --paper-deep:  #E6DDC8;  /* slight tint variant for texture wells */
-  --surface:     #FAF5E7;  /* card surface — lighter cream */
-  --ink:         #1C1813;  /* body ink */
-  --ink-2:       #5A5448;  /* secondary */
-  --ink-3:       #9A917C;  /* meta / captions */
-  --rule:        #CEC4AC;  /* hairline */
-  --rule-strong: #9A917C;  /* emphasis rule */
-  --accent:      #8F2A18;  /* burnt sienna */
-  --accent-2:    #D4521F;  /* brighter siena for hover glow */
-  --accent-wash: rgba(143, 42, 24, 0.07);
-  --accent-wash-2: rgba(143, 42, 24, 0.14);
+  /* -- iOS / Liquid Glass palette -- */
+  --paper:       #f2f2f7;
+  --paper-deep:  #e5e5ea;
+  --surface:     rgba(255,255,255,0.72);
+  --surface-solid: #ffffff;
+  --ink:         #1c1c1e;
+  --ink-2:       #3c3c43;
+  --ink-3:       #8e8e93;
+  --rule:        rgba(60,60,67,0.12);
+  --rule-strong: rgba(60,60,67,0.29);
+  --accent:      #007AFF;
+  --accent-2:    #0051D4;
+  --accent-wash: rgba(0,122,255,0.1);
+  --accent-wash-2: rgba(0,122,255,0.18);
 
-  /* ── Legacy aliases — kept so existing JS/CSS that references them still works ── */
+  /* -- Legacy aliases so existing JS that references them still works -- */
   --bg: var(--paper);
   --card: var(--surface);
   --text: var(--ink);
   --text2: var(--ink-2);
   --border: var(--rule);
-  --radius: 0px;
+  --radius: 16px;
 
-  /* ── Typography ── */
-  --font-display: 'Instrument Serif', 'Times New Roman', serif;
-  --font-body:    'Hanken Grotesk', -apple-system, 'Helvetica Neue', sans-serif;
-  --font-mono:    'JetBrains Mono', 'SF Mono', 'Menlo', monospace;
+  /* -- Typography -- */
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  --font-body:    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  --font-mono:    'SF Mono', 'JetBrains Mono', monospace;
 }
 
 html {
   background: var(--paper);
   height: 100%;
-  overflow: hidden; /* no page-level scroll — content fits the viewport */
+  overflow: hidden;
 }
 
 body {
@@ -51,52 +52,47 @@ body {
   font-weight: 400;
   background: var(--paper);
   color: var(--ink);
-  line-height: 1.55;
+  font-size: 17px;
+  line-height: 1.47;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   overflow: hidden;
   position: relative;
-  /* Warm atmospheric gradient wells — soft colored "light" on paper */
-  background-image:
-    radial-gradient(ellipse 60% 40% at 12% 0%,  rgba(143, 42, 24, 0.06), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 90% 100%, rgba(28, 24, 19, 0.05), transparent 75%);
-  background-attachment: fixed;
 }
 
-/* Fine grain / paper noise overlay — adds texture, no performance cost */
+/* No noise/paper texture -- clean iOS surface */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.55;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch' seed='3'/><feColorMatrix values='0 0 0 0 0.17  0 0 0 0 0.14  0 0 0 0 0.10  0 0 0 0.11 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0;
+  display: none;
 }
 
-/* All actual content sits above the noise layer */
+/* All actual content sits above any background */
 header, .app, .toast, .loupe { position: relative; z-index: 1; }
 
 body.eyedropper-mode, body.eyedropper-mode * {
   cursor: crosshair !important;
 }
 
-/* ── Selection ── */
-::selection { background: var(--accent); color: var(--surface); }
+/* -- Selection -- */
+::selection { background: var(--accent); color: #fff; }
 
-/* ── Scrollbars (applied globally; re-themed to match paper palette) ── */
-* { scrollbar-width: thin; scrollbar-color: var(--rule-strong) transparent; }
-*::-webkit-scrollbar { width: 10px; height: 10px; }
+/* -- Scrollbars (iOS thin style) -- */
+* { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.15) transparent; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
 *::-webkit-scrollbar-track { background: transparent; }
 *::-webkit-scrollbar-thumb {
-  background: var(--rule);
+  background: rgba(0,0,0,0.15);
   border: 2px solid transparent;
   background-clip: padding-box;
   border-radius: 10px;
 }
-*::-webkit-scrollbar-thumb:hover { background: var(--rule-strong); background-clip: padding-box; border: 2px solid transparent; }
+*::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); background-clip: padding-box; border: 2px solid transparent; }
 
 
 .app {
@@ -105,49 +101,46 @@ body.eyedropper-mode, body.eyedropper-mode * {
   padding: 20px 40px 24px;
   display: flex;
   flex-direction: row-reverse;
-  gap: 28px;
+  gap: 24px;
   align-items: stretch;
-  /* Fill the viewport exactly — masthead + app = 100vh, no scroll */
   height: calc(100vh - var(--masthead-h, 72px));
   min-height: 0;
 }
 
-/* ── Preview ── */
+/* -- Preview -- */
 .preview-col {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   position: sticky;
   top: 28px;
   align-self: flex-start;
 }
 
 .preview-wrap {
-  /* Shrinks when the viewport is too short to hold a 560² canvas plus the
-     two cards below — keeps everything inside a single non-scrolling view. */
   --preview-size: min(560px, calc(100vh - 260px));
   width: var(--preview-size);
   height: var(--preview-size);
-  border-radius: var(--radius);
+  border-radius: 20px;
   background:
-    repeating-conic-gradient(rgba(28,24,19,0.045) 0% 25%, transparent 0% 50%) 0 0 / 22px 22px,
-    linear-gradient(180deg, #FBF7EC, #F5EEDD);
+    repeating-conic-gradient(rgba(0,0,0,0.02) 0% 25%, transparent 0% 50%) 0 0 / 20px 20px,
+    linear-gradient(180deg, #fafafa, #f0f0f5);
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--rule);
+  border: 1px solid rgba(255,255,255,0.5);
   box-shadow:
-    0 1px 0 rgba(255,255,255,0.6) inset,
-    0 30px 60px -30px rgba(28, 24, 19, 0.35),
-    0 2px 10px -4px rgba(28, 24, 19, 0.15);
+    0 8px 40px rgba(0,0,0,0.12),
+    0 2px 8px rgba(0,0,0,0.04);
 }
 
-/* Inner frame — a subtle "passepartout" feel like a framed print */
+/* Inner frame -- subtle iOS feel */
 .preview-wrap::after {
   content: "";
   position: absolute;
-  inset: 10px;
-  border: 1px solid rgba(28, 24, 19, 0.08);
+  inset: 0;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.3);
   pointer-events: none;
   z-index: 8;
 }
@@ -158,19 +151,18 @@ body.eyedropper-mode, body.eyedropper-mode * {
   display: block;
   position: absolute;
   top: 0; left: 0;
-  filter: drop-shadow(0 6px 14px rgba(28,24,19,0.14)) drop-shadow(0 2px 4px rgba(28,24,19,0.10));
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.10)) drop-shadow(0 2px 4px rgba(0,0,0,0.06));
 }
 .preview-wrap > svg.hidden { display: none; }
 
-/* Colophon strip below preview — small meta info */
+/* Colophon strip below preview */
 .preview-col::after {
   content: "";
   position: absolute;
   pointer-events: none;
-  /* cosmetic only — placeholder hook for a future footer annotation */
 }
 
-/* SVG source container — off-screen, holds originals for reference */
+/* SVG source container -- off-screen */
 .svg-sources {
   position: absolute;
   top: -9999px;
@@ -195,14 +187,16 @@ body.eyedropper-mode, body.eyedropper-mode * {
 .overlay-img.active { display: block; }
 .overlay-img:active { cursor: grabbing; }
 
-/* Unified overlay button style — used for all image controls */
+/* Unified overlay button style */
 .overlay-btn {
   position: absolute;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: var(--ink);
-  border: 1.5px solid var(--surface);
+  background: rgba(28,28,30,0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,0.3);
   cursor: pointer;
   z-index: 11;
   display: none;
@@ -210,13 +204,13 @@ body.eyedropper-mode, body.eyedropper-mode * {
   justify-content: center;
   padding: 0;
   font-family: inherit;
-  transition: background 0.15s, transform 0.1s, border-color 0.15s;
-  box-shadow: 0 2px 6px rgba(28,24,19,0.3);
+  transition: background 0.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.15s, border-color 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 .overlay-btn.show { display: flex; }
 .overlay-btn:hover {
   background: var(--accent);
-  transform: scale(1.12);
+  transform: scale(1.1);
 }
 .overlay-btn svg {
   width: 14px;
@@ -224,13 +218,13 @@ body.eyedropper-mode, body.eyedropper-mode * {
   display: block;
 }
 /* Variant overrides */
-.overlay-btn.btn-delete:hover { background: #B33020; }
+.overlay-btn.btn-delete:hover { background: #FF3B30; }
 .overlay-btn.overlay-resize { cursor: nwse-resize; z-index: 12; }
 .overlay-btn.overlay-rotate { cursor: grab; z-index: 12; }
 .overlay-btn.overlay-rotate:active { cursor: grabbing; }
 .overlay-btn.overlay-radius { z-index: 13; }
 
-/* Snap guide lines — switched from blue to accent sienna to match palette */
+/* Snap guide lines */
 .guide-h, .guide-v {
   position: absolute;
   z-index: 9;
@@ -241,110 +235,101 @@ body.eyedropper-mode, body.eyedropper-mode * {
   left: 0;
   right: 0;
   height: 1px;
-  background: rgba(143, 42, 24, 0.7);
+  background: rgba(0, 122, 255, 0.7);
 }
 
 .guide-v {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: rgba(143, 42, 24, 0.7);
+  background: rgba(0, 122, 255, 0.7);
 }
 
 .guide-h.show, .guide-v.show { display: block; }
 
-/* ── Controls ── */
+/* -- Controls -- */
 .controls-col {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 .controls-col .card-color {
   display: flex;
   flex-direction: column;
 }
-/* Horizontal sub-layout for the two color cards (Color de carpeta | Color de archivo).
-   When Con archivo is off, the paper card is display:none and the folder card
-   stretches to fill the full row automatically (flex:1 on the only child).
-   flex-wrap lets them stack gracefully on very narrow viewports where
-   the two cards can't both fit above their ~200px minimum. */
 .color-cards-row {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   align-items: stretch;
   flex-wrap: wrap;
 }
-/* Equalize title rows so row height doesn't jump when Con archivo toggles
-   (toggle is 31px — pin both title rows to 32px min to match). */
 .color-cards-row > .card-color > .card-title {
   min-height: 32px;
 }
 .color-cards-row > .card-color {
   flex: 1 1 180px;
   min-width: 0;
-  padding: 14px 14px 16px;
+  padding: 16px;
 }
-.color-cards-row .color-tools { gap: 6px; }
+.color-cards-row .color-tools { gap: 8px; }
 .color-cards-row .color-tools .tool-btn {
-  padding: 6px 6px;
-  gap: 5px;
+  padding: 8px 10px;
+  gap: 6px;
   white-space: nowrap;
-  font-size: 10.5px;
+  font-size: 12px;
 }
 
 .card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 14px 18px 16px;
-  border: 1px solid var(--rule);
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 16px;
+  padding: 16px 20px 18px;
+  border: 1px solid rgba(255,255,255,0.5);
   position: relative;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  transition: box-shadow 0.25s cubic-bezier(0.25, 0.1, 0.25, 1), border-color 0.25s;
 }
-.card:hover { border-color: var(--rule-strong); }
+.card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+}
 .card:focus-within {
-  border-color: var(--ink);
-  box-shadow: 0 0 0 3px var(--accent-wash);
+  border-color: rgba(0,122,255,0.4);
+  box-shadow: 0 0 0 3px rgba(0,122,255,0.12), 0 4px 20px rgba(0,0,0,0.08);
 }
 
-/* Card titles — editorial: serif-italic mark + sans label + mono number on right */
+/* Card titles -- iOS style small caps label */
 .card-title {
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: 10px;
-  color: var(--ink);
+  margin-bottom: 12px;
+  color: var(--ink-3);
   display: flex;
   align-items: center;
   gap: 10px;
 }
-/* Small sienna diamond marker as the title's "drop cap" */
+/* No diamond marker -- clean iOS */
 .card-title::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
-  transform: rotate(45deg);
-  flex-shrink: 0;
+  content: none;
 }
-/* Trailing hairline fills to the right edge of the card */
+/* Trailing hairline */
 .card-title::after {
   content: "";
   flex: 1;
   height: 1px;
   background: var(--rule);
 }
-/* Title row with an inline control (e.g. Con archivo toggle) on the right */
+/* Title row with an inline control */
 .card-title-row {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-/* When the title row has a trailing control (toggle), suppress the
-   auto-filling rule since the control should flow at the end. */
 .card-title.card-title-row::after { display: none; }
 .card-title.card-title-row > span:first-child {
   flex: 1;
@@ -364,14 +349,14 @@ body.eyedropper-mode, body.eyedropper-mode * {
   gap: 8px;
 }
 .toggle-label-inline {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-family: var(--font-body);
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-2);
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--ink-3);
 }
-/* ── Symbol Picker ── */
+/* -- Symbol Picker -- */
 .card-symbol {
   display: flex;
   flex-direction: column;
@@ -381,82 +366,79 @@ body.eyedropper-mode, body.eyedropper-mode * {
 .symbol-search {
   width: 100%;
   box-sizing: border-box;
-  padding: 9px 14px;
+  padding: 12px 16px;
   font: inherit;
   font-family: var(--font-body);
-  font-size: 13px;
-  letter-spacing: 0.01em;
-  border: 1px solid var(--rule);
-  background: var(--paper);
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  border: none;
+  background: rgba(118,118,128,0.12);
   color: var(--ink);
-  border-radius: 0;
+  border-radius: 12px;
   outline: none;
-  margin-bottom: 10px;
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  margin-bottom: 12px;
+  transition: background 0.2s, box-shadow 0.2s;
 }
-.symbol-search::placeholder { color: var(--ink-3); font-style: italic; }
+.symbol-search::placeholder { color: var(--ink-3); font-style: normal; }
 .symbol-search:focus {
-  border-color: var(--ink);
-  background: var(--surface);
-  box-shadow: inset 0 -2px 0 var(--accent);
+  background: rgba(118,118,128,0.08);
+  box-shadow: 0 0 0 3px rgba(0,122,255,0.3);
 }
 
-/* ── Text Input ── */
+/* -- Text Input -- */
 .text-input {
   width: 100%;
   box-sizing: border-box;
-  padding: 10px 14px;
+  padding: 12px 16px;
   font: inherit;
   font-family: var(--font-body);
-  font-size: 14px;
-  border: 1px solid var(--rule);
-  background: var(--paper);
+  font-size: 17px;
+  border: none;
+  background: rgba(118,118,128,0.12);
   color: var(--ink);
-  border-radius: 0;
+  border-radius: 12px;
   outline: none;
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  transition: background 0.2s, box-shadow 0.2s;
 }
-.text-input::placeholder { color: var(--ink-3); font-style: italic; }
+.text-input::placeholder { color: var(--ink-3); font-style: normal; }
 .text-input:focus {
-  border-color: var(--ink);
-  background: var(--surface);
-  box-shadow: inset 0 -2px 0 var(--accent);
+  background: rgba(118,118,128,0.08);
+  box-shadow: 0 0 0 3px rgba(0,122,255,0.3);
 }
 
 .symbol-tabs {
   display: flex;
-  gap: 4px;
-  margin-bottom: 10px;
+  gap: 6px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
 }
 .symbol-tab {
   font: inherit;
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.02em;
-  padding: 5px 11px;
-  border: 1px solid var(--rule);
-  background: transparent;
-  color: var(--ink-2);
+  letter-spacing: 0.01em;
+  padding: 6px 14px;
+  border: none;
+  background: rgba(118,118,128,0.08);
+  color: var(--ink-3);
   cursor: pointer;
-  border-radius: 0;
+  border-radius: 20px;
   position: relative;
-  transition: color 0.18s, border-color 0.18s, background 0.18s;
+  transition: color 0.2s, background 0.2s;
 }
 .symbol-tab:hover {
   color: var(--ink);
-  border-color: var(--rule-strong);
+  background: rgba(0,122,255,0.08);
 }
 .symbol-tab.active {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--surface);
+  background: var(--accent);
+  color: #fff;
 }
 .symbol-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: 6px;
   align-content: start;
   flex: 1;
   min-height: 0;
@@ -468,25 +450,23 @@ body.eyedropper-mode, body.eyedropper-mode * {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 0;
+  background: rgba(118,118,128,0.08);
+  border: none;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  transition: background 0.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.15s;
   padding: 0;
 }
 .symbol-item:hover {
-  background: var(--accent-wash);
-  border-color: var(--accent);
-  transform: translateY(-1px);
+  background: rgba(0,122,255,0.08);
+  transform: scale(1.05);
 }
 .symbol-item.active {
-  background: var(--ink);
-  border-color: var(--ink);
+  background: var(--accent);
 }
 .symbol-item svg {
-  width: 60%;
-  height: 60%;
+  width: 55%;
+  height: 55%;
   display: block;
   stroke: var(--ink);
   stroke-width: 2;
@@ -494,59 +474,63 @@ body.eyedropper-mode, body.eyedropper-mode * {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.symbol-item.active svg { stroke: var(--surface); }
+.symbol-item.active svg { stroke: #fff; }
 
-/* ── Brand icons render as FILLED paths, not stroked. ── */
+/* -- Brand icons render as FILLED paths -- */
 .symbol-item.brand svg {
   stroke: none;
   fill: var(--ink);
-  width: 62%;
-  height: 62%;
+  width: 58%;
+  height: 58%;
 }
-.symbol-item.brand.active svg { fill: var(--surface); }
+.symbol-item.brand.active svg { fill: #fff; }
 .symbol-item.brand:hover svg { fill: var(--accent); }
 
-/* ── Library mode toggle (Símbolos / Marcas) ── */
+/* -- Library mode toggle -- */
 .lib-toggle {
   display: inline-flex;
-  border: 1px solid var(--rule);
-  background: var(--paper);
-  padding: 2px;
+  background: rgba(118,118,128,0.12);
+  padding: 3px;
   gap: 2px;
+  border-radius: 10px;
+  border: none;
 }
 .lib-toggle-btn {
   font: inherit;
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  padding: 4px 10px;
+  letter-spacing: 0.01em;
+  padding: 5px 12px;
   border: 0;
   background: transparent;
   color: var(--ink-3);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s, box-shadow 0.2s;
   text-transform: none;
 }
 .lib-toggle-btn:hover { color: var(--ink); }
 .lib-toggle-btn.active {
-  background: var(--ink);
-  color: var(--surface);
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0.5px 1px rgba(0,0,0,0.04);
 }
 
-/* ── Brand-color apply bar ── */
+/* -- Brand-color apply bar -- */
 .brand-color-bar {
-  margin-top: 10px;
-  padding: 8px 10px;
-  background: var(--paper);
-  border: 1px dashed var(--rule-strong);
-  font-size: 12px;
-  line-height: 1.3;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(118,118,128,0.06);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.4;
 }
 .brand-color-toggle {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
   cursor: pointer;
   user-select: none;
 }
@@ -557,31 +541,30 @@ body.eyedropper-mode, body.eyedropper-mode * {
 }
 .brand-color-swatch {
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  border: 1px solid rgba(28, 24, 19, 0.25);
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 4px;
   background: var(--ink);
   flex-shrink: 0;
 }
 .brand-color-text { color: var(--ink-2); }
 .brand-color-text em {
-  font-style: italic;
-  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 600;
   color: var(--ink);
-  font-weight: 500;
 }
 
 .symbol-grid-empty {
   grid-column: 1 / -1;
   text-align: center;
   color: var(--ink-3);
-  padding: 28px 0;
-  font-size: 13px;
-  font-style: italic;
-  font-family: var(--font-display);
+  padding: 32px 0;
+  font-size: 15px;
+  font-style: normal;
 }
 
-/* ── iOS Toggle ── */
+/* -- iOS Toggle -- */
 .toggle-row {
   display: flex;
   align-items: center;
@@ -589,7 +572,7 @@ body.eyedropper-mode, body.eyedropper-mode * {
 }
 
 .toggle-label {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 500;
 }
 
@@ -611,15 +594,15 @@ body.eyedropper-mode, body.eyedropper-mode * {
   position: absolute;
   inset: 0;
   border-radius: 15.5px;
-  background: var(--paper-deep);
-  border: 1px solid var(--rule);
-  transition: background 0.3s, border-color 0.3s;
+  background: rgba(120,120,128,0.16);
+  border: none;
+  transition: background 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
   cursor: pointer;
 }
 
 .ios-toggle input:checked + .track {
-  background: var(--ink);
-  border-color: var(--ink);
+  background: #34C759;
+  border-color: #34C759;
 }
 
 .ios-toggle .thumb {
@@ -629,21 +612,21 @@ body.eyedropper-mode, body.eyedropper-mode * {
   width: 27px;
   height: 27px;
   border-radius: 50%;
-  background: var(--surface);
-  box-shadow: 0 1px 3px rgba(28,24,19,0.18), 0 0 0 0.5px rgba(28,24,19,0.1);
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
 }
 .ios-toggle input:checked ~ .thumb {
-  background: var(--accent);
-  box-shadow: 0 1px 3px rgba(28,24,19,0.28), 0 0 0 0.5px rgba(28,24,19,0.15);
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1);
 }
 
 .ios-toggle input:checked ~ .thumb {
   transform: translateX(20px);
 }
 
-/* ── Color Card ── */
+/* -- Color Card -- */
 .color-picker-wrap {
   display: flex;
   flex-direction: column;
@@ -655,13 +638,13 @@ body.eyedropper-mode, body.eyedropper-mode * {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 0;
+  padding: 8px 0;
 }
 
 .color-tools {
   display: flex;
-  gap: 6px;
-  margin-top: 10px;
+  gap: 8px;
+  margin-top: 12px;
 }
 .color-tools .tool-btn {
   flex: 1;
@@ -672,64 +655,62 @@ body.eyedropper-mode, body.eyedropper-mode * {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 11px;
-  border: 1px solid var(--rule);
-  border-radius: 0;
-  background: transparent;
-  color: var(--ink-2);
-  font-family: var(--font-body);
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
-}
-.tool-btn:hover {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--surface);
-}
-.tool-btn:active { transform: translateY(1px); }
-.tool-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
-.tool-btn .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #5CBFEC;
-  flex-shrink: 0;
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.1) inset;
-}
-/* White swatch for Color de archivo "Restaurar color" (outlined, since default is white) */
-.tool-btn .dot.dot-white {
-  background: #FFFFFF;
-  box-shadow: 0 0 0 1px rgba(28,24,19,0.28) inset;
-}
-
-/* ── Upload Zone ── */
-.upload-zone {
-  border: 1px dashed var(--rule-strong);
-  border-radius: 0;
-  padding: 18px 14px;
-  text-align: center;
-  cursor: pointer;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.04);
   color: var(--ink-2);
   font-family: var(--font-body);
   font-size: 13px;
-  font-style: italic;
-  letter-spacing: 0.01em;
-  background: var(--paper);
+  font-weight: 500;
+  letter-spacing: 0;
+  cursor: pointer;
+  min-height: 36px;
+  transition: background 0.2s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.2s, transform 0.1s;
+}
+.tool-btn:hover {
+  background: rgba(0,122,255,0.1);
+  color: var(--accent);
+}
+.tool-btn:active { transform: scale(0.97); }
+.tool-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+.tool-btn .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #5CBFEC;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08) inset;
+}
+.tool-btn .dot.dot-white {
+  background: #FFFFFF;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+}
+
+/* -- Upload Zone -- */
+.upload-zone {
+  border: 2px dashed rgba(60,60,67,0.2);
+  border-radius: 16px;
+  padding: 20px 16px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--ink-3);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-style: normal;
+  background: rgba(118,118,128,0.04);
   transition: border-color 0.2s, background 0.2s, color 0.2s;
 }
 
 .upload-zone:hover {
-  border-color: var(--ink);
-  background: var(--accent-wash);
-  color: var(--ink);
+  border-color: var(--accent);
+  background: rgba(0,122,255,0.04);
+  color: var(--accent);
 }
 
 .upload-zone.drag-over {
   border-color: var(--accent);
-  background: var(--accent-wash-2);
+  background: rgba(0,122,255,0.08);
   color: var(--accent);
   border-style: solid;
 }
@@ -748,12 +729,12 @@ body.eyedropper-mode, body.eyedropper-mode * {
 .slider-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .slider-row label {
   font-size: 13px;
-  color: var(--text2);
+  color: var(--ink-3);
   flex-shrink: 0;
   min-width: 32px;
 }
@@ -762,27 +743,27 @@ body.eyedropper-mode, body.eyedropper-mode * {
   flex: 1;
   -webkit-appearance: none;
   appearance: none;
-  height: 2px;
-  background: var(--rule);
-  border-radius: 0;
+  height: 4px;
+  background: rgba(118,118,128,0.2);
+  border-radius: 2px;
   outline: none;
 }
 
 .slider-row input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 1px 2px rgba(28,24,19,0.3);
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15), 0 0 0 0.5px rgba(0,0,0,0.08);
   cursor: pointer;
-  border: 2px solid var(--surface);
+  border: none;
 }
 
 .slider-val {
   font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-2);
+  font-size: 12px;
+  color: var(--ink-3);
   min-width: 36px;
   text-align: right;
   font-variant-numeric: tabular-nums;
@@ -790,90 +771,87 @@ body.eyedropper-mode, body.eyedropper-mode * {
 
 .remove-btn {
   background: none;
-  border: 1px solid var(--accent);
-  color: var(--accent);
+  border: 1.5px solid #FF3B30;
+  color: #FF3B30;
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 7px 14px;
-  border-radius: 0;
+  letter-spacing: 0;
+  text-transform: none;
+  padding: 8px 16px;
+  border-radius: 12px;
   cursor: pointer;
   align-self: flex-start;
+  min-height: 36px;
   transition: background 0.2s, color 0.2s;
 }
 
 .remove-btn:hover {
-  background: var(--accent);
-  color: var(--surface);
+  background: #FF3B30;
+  color: #fff;
 }
 
-/* ── Export Card ── */
+/* -- Export Card -- */
 .export-row {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .btn {
   flex: 1;
-  padding: 11px 14px;
-  border: 1px solid transparent;
-  border-radius: 0;
+  padding: 0 16px;
+  height: 44px;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
   font-family: var(--font-body);
-  font-size: 11.5px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  text-transform: none;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.2s, border-color 0.2s, transform 0.1s, opacity 0.2s;
 }
 
-.btn:active { transform: translateY(1px); }
+.btn:active { transform: scale(0.97); }
 
 .btn-primary {
-  background: var(--ink);
-  color: var(--surface);
-  border-color: var(--ink);
-  position: relative;
-}
-.btn-primary::before {
-  content: "→";
-  font-family: var(--font-display);
-  margin-right: 8px;
-  color: var(--accent);
-  font-style: italic;
-  font-size: 1.2em;
-  letter-spacing: 0;
-}
-.btn-primary:hover {
   background: var(--accent);
+  color: #fff;
   border-color: var(--accent);
 }
-.btn-primary:hover::before { color: var(--surface); }
+/* Remove the arrow pseudo-element */
+.btn-primary::before {
+  content: none;
+}
+.btn-primary:hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+}
 
 .btn-secondary {
   background: transparent;
-  color: var(--ink);
-  border-color: var(--ink);
+  color: var(--accent);
+  border-color: var(--accent);
 }
 .btn-secondary:hover {
-  background: var(--ink);
-  color: var(--surface);
+  background: rgba(0,122,255,0.08);
 }
 
-/* ── Eyedropper Loupe ── */
+/* -- Eyedropper Loupe -- */
 .loupe {
   position: fixed;
   width: 92px;
   height: 92px;
   border-radius: 50%;
-  border: 2px solid var(--ink);
+  border: 3px solid #fff;
   overflow: hidden;
   pointer-events: none;
   z-index: 9999;
   display: none;
-  box-shadow: 0 4px 20px rgba(28,24,19,0.35), 0 0 0 4px var(--surface);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
 }
 
 .loupe canvas {
@@ -893,7 +871,7 @@ body.eyedropper-mode, body.eyedropper-mode * {
 .loupe-crosshair::after {
   content: '';
   position: absolute;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.3);
 }
 
 .loupe-crosshair::before {
@@ -910,31 +888,31 @@ body.eyedropper-mode, body.eyedropper-mode * {
   transform: translateY(-0.5px);
 }
 
-/* ── Toast ── */
+/* -- Toast -- */
 .toast {
   position: fixed;
   bottom: 48px;
   left: 50%;
   transform: translateX(-50%) translateY(20px);
-  background: var(--ink);
-  color: var(--surface);
-  padding: 12px 24px;
-  border-radius: 0;
-  border: 1px solid var(--ink);
+  background: rgba(28,28,30,0.9);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: 14px;
+  border: none;
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: -0.01em;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s, transform 0.3s;
   z-index: 10000;
-  box-shadow: 0 8px 32px rgba(28,24,19,0.35);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
 }
 .toast::before {
-  content: "· ";
-  color: var(--accent);
-  font-weight: 700;
+  content: none;
 }
 
 .toast.show {
@@ -942,58 +920,62 @@ body.eyedropper-mode, body.eyedropper-mode * {
   transform: translateX(-50%) translateY(0);
 }
 
-/* ── Hidden file input ── */
+/* -- Hidden file input -- */
 #fileInput { display: none; }
 
-/* ══════════════════════════════════════════════════
-   HEADER — compact title on the left
-   ══════════════════════════════════════════════════ */
+/* ============================================
+   HEADER -- sticky glass masthead
+   ============================================ */
 .masthead {
-  position: relative;
+  position: sticky;
+  top: 0;
   max-width: 1120px;
   margin: 0 auto;
-  padding: 24px 40px 14px;
-  z-index: 1;
+  padding: 20px 40px 16px;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid rgba(60,60,67,0.12);
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 .masthead h1 {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-style: italic;
-  font-size: 38px;
-  line-height: 1;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 34px;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
   color: var(--ink);
   margin: 0;
   flex-shrink: 0;
 }
 .masthead h1 .roman {
   font-style: normal;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.5px;
 }
 .masthead h1 .accent {
   color: var(--accent);
 }
 
-/* ══════════════════════════════════════════════════
-   Load animations — subtle fade-in on load
-   ══════════════════════════════════════════════════ */
+/* ============================================
+   Load animations -- subtle fade-in on load
+   ============================================ */
 @keyframes riseFade {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.masthead > * { animation: riseFade 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.masthead > * { animation: riseFade 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) both; }
 .masthead h1          { animation-delay: 0.00s; }
-.app > .preview-col { animation: riseFade 0.8s 0.15s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-.app > .controls-col > * { animation: riseFade 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-.app > .controls-col > *:nth-child(1) { animation-delay: 0.20s; }
-.app > .controls-col > *:nth-child(2) { animation-delay: 0.28s; }
-.app > .controls-col > *:nth-child(3) { animation-delay: 0.36s; }
-.app > .controls-col > *:nth-child(4) { animation-delay: 0.44s; }
+.app > .preview-col { animation: riseFade 0.6s 0.1s cubic-bezier(0.25, 0.1, 0.25, 1) both; }
+.app > .controls-col > * { animation: riseFade 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) both; }
+.app > .controls-col > *:nth-child(1) { animation-delay: 0.12s; }
+.app > .controls-col > *:nth-child(2) { animation-delay: 0.18s; }
+.app > .controls-col > *:nth-child(3) { animation-delay: 0.24s; }
+.app > .controls-col > *:nth-child(4) { animation-delay: 0.30s; }
 
 @media (prefers-reduced-motion: reduce) {
   .masthead > *,
@@ -1001,13 +983,10 @@ body.eyedropper-mode, body.eyedropper-mode * {
   .app > .controls-col > * { animation: none; }
 }
 
-/* ══════════════════════════════════════════════════
+/* ============================================
    Responsive
-   ══════════════════════════════════════════════════ */
+   ============================================ */
 @media (max-width: 1000px) {
-  /* Mobile/tablet: restore page-level scrolling. Desktop locks the viewport
-     (html/body overflow:hidden) to fit everything in one screen, but on
-     narrower viewports the stacked layout genuinely needs to scroll. */
   html, body {
     height: auto;
     overflow: visible;
@@ -1020,8 +999,7 @@ body.eyedropper-mode, body.eyedropper-mode * {
     flex-direction: column;
     align-items: center;
     padding: 20px 20px 48px;
-    gap: 18px;
-    /* Release the viewport-height lock — let content determine height. */
+    gap: 16px;
     height: auto;
     min-height: 0;
   }
@@ -1029,7 +1007,7 @@ body.eyedropper-mode, body.eyedropper-mode * {
     position: static;
     width: 100%;
     max-width: 560px;
-    height: auto !important; /* override the JS lockControlsColHeight fallback */
+    height: auto !important;
   }
   .preview-wrap {
     width: 100%;
@@ -1040,20 +1018,17 @@ body.eyedropper-mode, body.eyedropper-mode * {
   .controls-col {
     width: 100%;
     max-width: 560px;
-    height: auto !important; /* unlock — page scrolls now, not inner panels */
+    height: auto !important;
   }
-  /* Let the symbol grid expand to its natural height. Otherwise the grid
-     keeps its desktop `flex:1; overflow-y:auto` and becomes a tiny inner
-     scroll window — bad on touch where the page should scroll instead. */
   .symbol-grid {
     flex: 0 1 auto;
     min-height: 0;
-    max-height: 46vh;   /* still cap it so it doesn't dominate the page */
+    max-height: 46vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   .masthead {
-    padding: 20px 20px 12px;
+    padding: 16px 20px 14px;
   }
 }
 
@@ -1062,29 +1037,28 @@ body.eyedropper-mode, body.eyedropper-mode * {
     font-size: 28px;
   }
   .app {
-    padding: 16px 14px 44px;
-    gap: 14px;
+    padding: 16px 16px 44px;
+    gap: 16px;
   }
   .card {
-    padding: 12px 14px 14px;
+    padding: 14px 16px 16px;
   }
   .color-cards-row {
-    gap: 10px;
+    gap: 12px;
   }
   .color-cards-row > .card-color {
-    flex: 1 1 100%;   /* stack the two color cards on phones */
-    padding: 12px 12px 14px;
+    flex: 1 1 100%;
+    padding: 14px;
   }
-  /* Smaller grid cells on phones so the default rows stay useful */
   .symbol-grid {
-    grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
     max-height: 42vh;
   }
 }
 
 @media (max-width: 420px) {
   .masthead {
-    padding: 16px 14px 10px;
+    padding: 14px 16px 12px;
     gap: 12px;
   }
   .masthead h1 {
