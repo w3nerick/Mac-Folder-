@@ -1065,6 +1065,329 @@ body.eyedropper-mode, body.eyedropper-mode * {
     font-size: 24px;
   }
 }
+
+/* ============================================
+   TOOLBAR (in masthead)
+   ============================================ */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tb-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(118,118,128,0.12);
+  color: var(--ink-2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, color 0.18s, transform 0.1s, opacity 0.18s;
+  padding: 0;
+}
+.tb-btn svg { width: 18px; height: 18px; display: block; }
+.tb-btn:hover:not(:disabled) {
+  background: rgba(0,122,255,0.12);
+  color: var(--accent);
+}
+.tb-btn:active:not(:disabled) { transform: scale(0.94); }
+.tb-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.tb-btn.tb-toggle.active {
+  background: var(--accent);
+  color: #fff;
+}
+.tb-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--rule);
+  margin: 0 4px;
+}
+
+/* ============================================
+   COLOR EXTRAS (HEX input, presets, recents)
+   ============================================ */
+.color-extras {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+.hex-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hex-input-wrap {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(118,118,128,0.12);
+  border-radius: 8px;
+  padding: 0 8px 0 10px;
+  height: 30px;
+  flex-shrink: 0;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+.hex-input-wrap:focus-within {
+  background: rgba(118,118,128,0.08);
+  box-shadow: 0 0 0 3px rgba(0,122,255,0.3);
+}
+.hex-prefix {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-right: 2px;
+  user-select: none;
+}
+.hex-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 64px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  text-transform: uppercase;
+  padding: 0;
+}
+.preset-row, .recent-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+.preset-label {
+  font-size: 11px;
+  color: var(--ink-3);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-right: 2px;
+}
+.swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 0;
+  flex-shrink: 0;
+  transition: transform 0.12s, box-shadow 0.18s;
+}
+.swatch:hover {
+  transform: scale(1.12);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.swatch:active { transform: scale(1.0); }
+.swatch.empty {
+  background: transparent;
+  border: 1px dashed rgba(60,60,67,0.25);
+  cursor: default;
+}
+.swatch.empty:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============================================
+   EXPORT OPTIONS
+   ============================================ */
+.export-options {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.export-options-label {
+  font-size: 12px;
+  color: var(--ink-3);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-right: 2px;
+}
+.size-select {
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(118,118,128,0.12);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 28px 6px 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  outline: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M3 5l3 3 3-3' fill='none' stroke='%238e8e93' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  transition: background-color 0.18s, box-shadow 0.18s;
+}
+.size-select:focus {
+  box-shadow: 0 0 0 3px rgba(0,122,255,0.3);
+}
+
+/* ============================================
+   OVERLAY HUD (live size / angle indicator)
+   ============================================ */
+.overlay-hud {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 14;
+  background: rgba(28,28,30,0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  padding: 5px 9px;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  font-variant-numeric: tabular-nums;
+}
+.overlay-hud.show { opacity: 1; }
+
+/* ============================================
+   FOCUS VISIBLE — keyboard accessibility
+   ============================================ */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.overlay-btn:focus-visible,
+.tool-btn:focus-visible,
+.tb-btn:focus-visible,
+.symbol-item:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Symbol grid: keyboard navigation hint */
+.symbol-item:focus-visible {
+  background: rgba(0,122,255,0.16);
+}
+
+/* ============================================
+   DARK MODE — auto via prefers-color-scheme,
+   forced by data-theme="dark" or "light" on <html>
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:       #1c1c1e;
+    --paper-deep:  #2c2c2e;
+    --surface:     rgba(44,44,46,0.72);
+    --surface-solid: #2c2c2e;
+    --ink:         #f2f2f7;
+    --ink-2:       #d1d1d6;
+    --ink-3:       #8e8e93;
+    --rule:        rgba(255,255,255,0.10);
+    --rule-strong: rgba(255,255,255,0.18);
+    --accent:      #0A84FF;
+    --accent-2:    #409CFF;
+    --accent-wash: rgba(10,132,255,0.16);
+    --accent-wash-2: rgba(10,132,255,0.26);
+  }
+}
+:root[data-theme="dark"] {
+  --paper:       #1c1c1e;
+  --paper-deep:  #2c2c2e;
+  --surface:     rgba(44,44,46,0.72);
+  --surface-solid: #2c2c2e;
+  --ink:         #f2f2f7;
+  --ink-2:       #d1d1d6;
+  --ink-3:       #8e8e93;
+  --rule:        rgba(255,255,255,0.10);
+  --rule-strong: rgba(255,255,255,0.18);
+  --accent:      #0A84FF;
+  --accent-2:    #409CFF;
+  --accent-wash: rgba(10,132,255,0.16);
+  --accent-wash-2: rgba(10,132,255,0.26);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .preview-wrap {
+    background:
+      repeating-conic-gradient(rgba(255,255,255,0.03) 0% 25%, transparent 0% 50%) 0 0 / 20px 20px,
+      linear-gradient(180deg, #232325, #1a1a1c);
+    border-color: rgba(255,255,255,0.06);
+  }
+  :root:not([data-theme="light"]) .symbol-search,
+  :root:not([data-theme="light"]) .text-input,
+  :root:not([data-theme="light"]) .symbol-tab,
+  :root:not([data-theme="light"]) .lib-toggle,
+  :root:not([data-theme="light"]) .symbol-item,
+  :root:not([data-theme="light"]) .hex-input-wrap,
+  :root:not([data-theme="light"]) .size-select,
+  :root:not([data-theme="light"]) .tb-btn,
+  :root:not([data-theme="light"]) .tool-btn {
+    background: rgba(118,118,128,0.18);
+  }
+  :root:not([data-theme="light"]) .lib-toggle-btn.active {
+    background: rgba(255,255,255,0.10);
+    color: var(--ink);
+  }
+  :root:not([data-theme="light"]) .upload-zone {
+    background: rgba(118,118,128,0.08);
+    border-color: rgba(255,255,255,0.18);
+  }
+  :root:not([data-theme="light"]) .swatch {
+    border-color: rgba(255,255,255,0.10);
+  }
+}
+:root[data-theme="dark"] .preview-wrap {
+  background:
+    repeating-conic-gradient(rgba(255,255,255,0.03) 0% 25%, transparent 0% 50%) 0 0 / 20px 20px,
+    linear-gradient(180deg, #232325, #1a1a1c);
+  border-color: rgba(255,255,255,0.06);
+}
+:root[data-theme="dark"] .symbol-search,
+:root[data-theme="dark"] .text-input,
+:root[data-theme="dark"] .symbol-tab,
+:root[data-theme="dark"] .lib-toggle,
+:root[data-theme="dark"] .symbol-item,
+:root[data-theme="dark"] .hex-input-wrap,
+:root[data-theme="dark"] .size-select,
+:root[data-theme="dark"] .tb-btn,
+:root[data-theme="dark"] .tool-btn {
+  background: rgba(118,118,128,0.18);
+}
+:root[data-theme="dark"] .lib-toggle-btn.active {
+  background: rgba(255,255,255,0.10);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .upload-zone {
+  background: rgba(118,118,128,0.08);
+  border-color: rgba(255,255,255,0.18);
+}
+:root[data-theme="dark"] .swatch {
+  border-color: rgba(255,255,255,0.10);
+}
+
+/* Drop-target visual feedback on the preview itself */
+.preview-wrap.drop-target {
+  outline: 3px dashed var(--accent);
+  outline-offset: -8px;
+}
 </style>
 </head>
 <body>
@@ -1138,6 +1461,22 @@ body.eyedropper-mode, body.eyedropper-mode * {
 
 <header class="masthead">
   <h1><span class="accent">C</span><span class="roman">arpetero</span></h1>
+  <div class="toolbar" role="toolbar" aria-label="Acciones globales">
+    <button class="tb-btn" id="undoBtn" disabled aria-label="Deshacer (Ctrl+Z)" title="Deshacer (Ctrl/⌘+Z)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 14L4 9l5-5M4 9h11a5 5 0 0 1 0 10h-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="tb-btn" id="redoBtn" disabled aria-label="Rehacer (Ctrl+Shift+Z)" title="Rehacer (Ctrl/⌘+Shift+Z)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 14l5-5-5-5M20 9H9a5 5 0 0 0 0 10h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <span class="tb-divider"></span>
+    <button class="tb-btn" id="resetBtn" aria-label="Restablecer todo" title="Restablecer todo">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3.5-7.1M3 4v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <span class="tb-divider"></span>
+    <button class="tb-btn tb-toggle" id="themeBtn" aria-label="Cambiar tema (claro/oscuro/auto)" title="Tema (claro / oscuro / auto)">
+      <svg viewBox="0 0 24 24" fill="none" id="themeIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
 </header>
 
 <div class="app">
@@ -1147,34 +1486,35 @@ body.eyedropper-mode, body.eyedropper-mode * {
       <svg id="svgDisplayEmpty" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"></svg>
       <svg id="svgDisplayFilled" class="hidden" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"></svg>
       <img class="overlay-img" id="overlayImg" draggable="false" alt="">
-      <button class="overlay-btn btn-delete" id="overlayClose" title="Eliminar">
+      <button class="overlay-btn btn-delete" id="overlayClose" aria-label="Eliminar gráfico (Supr)" title="Eliminar (Supr)">
         <svg viewBox="0 0 24 24" fill="none"><path d="M7 7L17 17M17 7L7 17" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
       </button>
-      <div class="overlay-btn overlay-radius" id="overlayRadiusTL" data-corner="tl" title="Radio de esquina">
+      <button class="overlay-btn overlay-radius" id="overlayRadiusTL" data-corner="tl" aria-label="Radio esquina superior izquierda" title="Radio de esquina">
         <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.6" fill="#fff"/></svg>
-      </div>
-      <div class="overlay-btn overlay-radius" id="overlayRadiusTR" data-corner="tr" title="Radio de esquina">
+      </button>
+      <button class="overlay-btn overlay-radius" id="overlayRadiusTR" data-corner="tr" aria-label="Radio esquina superior derecha" title="Radio de esquina">
         <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.6" fill="#fff"/></svg>
-      </div>
-      <div class="overlay-btn overlay-radius" id="overlayRadiusBL" data-corner="bl" title="Radio de esquina">
+      </button>
+      <button class="overlay-btn overlay-radius" id="overlayRadiusBL" data-corner="bl" aria-label="Radio esquina inferior izquierda" title="Radio de esquina">
         <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.6" fill="#fff"/></svg>
-      </div>
-      <div class="overlay-btn overlay-radius" id="overlayRadiusBR" data-corner="br" title="Radio de esquina">
+      </button>
+      <button class="overlay-btn overlay-radius" id="overlayRadiusBR" data-corner="br" aria-label="Radio esquina inferior derecha" title="Radio de esquina">
         <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.6" fill="#fff"/></svg>
-      </div>
-      <div class="overlay-btn overlay-resize" id="overlayResize" title="Redimensionar">
+      </button>
+      <button class="overlay-btn overlay-resize" id="overlayResize" aria-label="Redimensionar" title="Redimensionar">
         <svg viewBox="0 0 24 24" fill="none">
           <path d="M9 5H5V9M5 5L11 11M19 15V19H15M19 19L13 13" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-      </div>
-      <div class="overlay-btn overlay-rotate" id="overlayRotate" title="Rotar">
+      </button>
+      <button class="overlay-btn overlay-rotate" id="overlayRotate" aria-label="Rotar" title="Rotar">
         <svg viewBox="0 0 24 24" fill="none">
           <path d="M19 12a7 7 0 1 1-2.05-4.95M19 5V9H15" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-      </div>
+      </button>
       <div class="guide-h" id="guideH"></div>
       <div class="guide-h" id="guideH2"></div>
       <div class="guide-v" id="guideV"></div>
+      <div class="overlay-hud" id="overlayHud" aria-live="polite"></div>
     </div>
     <!-- Image Upload Card (below preview — input sits close to output) -->
     <div class="card">
@@ -1187,8 +1527,24 @@ body.eyedropper-mode, body.eyedropper-mode * {
     <div class="card">
       <div class="card-title">Exportar</div>
       <div class="export-row">
-        <button class="btn btn-primary" id="copyBtn">Copiar al portapapeles</button>
-        <button class="btn btn-secondary" id="downloadBtn">Descargar PNG</button>
+        <button class="btn btn-primary" id="copyBtn" title="Copiar PNG (Ctrl/⌘+C)">Copiar al portapapeles</button>
+        <button class="btn btn-secondary" id="downloadBtn" title="Descargar PNG (Ctrl/⌘+S)">Descargar PNG</button>
+      </div>
+      <div class="export-options">
+        <span class="export-options-label">Tamaño</span>
+        <select id="sizeSelect" class="size-select" aria-label="Tamaño del PNG">
+          <option value="1024" selected>1024 px</option>
+          <option value="512">512 px</option>
+          <option value="256">256 px</option>
+          <option value="128">128 px</option>
+          <option value="64">64 px</option>
+          <option value="32">32 px</option>
+          <option value="16">16 px</option>
+        </select>
+        <button class="tool-btn" id="downloadSvgBtn" title="Descargar SVG vectorial">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 12V8a5 5 0 0 1 10 0v4M5 9l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          SVG
+        </button>
       </div>
     </div>
   </div>
@@ -1216,6 +1572,16 @@ body.eyedropper-mode, body.eyedropper-mode * {
               <span class="dot"></span>
               Restaurar color
             </button>
+          </div>
+          <div class="color-extras">
+            <div class="hex-row">
+              <label class="hex-input-wrap" title="Color en hexadecimal">
+                <span class="hex-prefix">#</span>
+                <input type="text" class="hex-input" id="hexInput" maxlength="6" autocomplete="off" spellcheck="false" aria-label="Color de carpeta en hex">
+              </label>
+              <div class="recent-row" id="recentRow" aria-label="Colores recientes"></div>
+            </div>
+            <div class="preset-row" id="presetRow" aria-label="Colores Finder de macOS"></div>
           </div>
         </div>
       </div>
@@ -1277,6 +1643,24 @@ body.eyedropper-mode, body.eyedropper-mode * {
           <input type="checkbox" id="useBrandColorChk" checked>
           <span class="brand-color-swatch" id="brandColorSwatch"></span>
           <span class="brand-color-text">Usar color de marca <em id="brandColorTitle"></em></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Overlay Adjustments (visible only when an overlay is active) -->
+    <div class="card" id="overlayCard" style="display:none;">
+      <div class="card-title">Ajustes del gráfico</div>
+      <div class="slider-row">
+        <label for="opacitySlider">Op.</label>
+        <input type="range" id="opacitySlider" min="0" max="100" value="100" aria-label="Opacidad del gráfico">
+        <span class="slider-val" id="opacityVal">100%</span>
+      </div>
+      <div class="toggle-row" style="margin-top:10px">
+        <span class="toggle-label">Sombra</span>
+        <label class="ios-toggle" title="Activar sombra del gráfico">
+          <input type="checkbox" id="shadowToggle">
+          <span class="track"></span>
+          <span class="thumb"></span>
         </label>
       </div>
     </div>
@@ -3670,6 +4054,851 @@ renderSymbolTabs();
 renderSymbolGrid();
 updateBrandColorBar();
 // SVG paths initialized inline via initDisplaySvg above
+
+/* ════════════════════════════════════════════════════════════════════════
+   ENHANCEMENTS — added in second pass:
+   ─ Undo/redo + history
+   ─ localStorage persistence
+   ─ Keyboard shortcuts
+   ─ HEX input, Finder color presets, recent colors
+   ─ Overlay opacity + shadow
+   ─ Live HUD (size / angle indicators during drag, resize, rotate)
+   ─ Multi-size PNG export + SVG export
+   ─ Drop directly on preview + image size validation
+   ─ Reset & theme toggle
+   ─ Symbol grid keyboard navigation
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* New state fields */
+state.opacity = 1;
+state.shadow = false;
+state.imageDataUrl = null;
+
+/* DOM refs for new controls */
+const undoBtn       = $('undoBtn');
+const redoBtn       = $('redoBtn');
+const resetBtn      = $('resetBtn');
+const themeBtn      = $('themeBtn');
+const hexInput      = $('hexInput');
+const presetRow     = $('presetRow');
+const recentRow     = $('recentRow');
+const sizeSelect    = $('sizeSelect');
+const downloadSvgBtn = $('downloadSvgBtn');
+const overlayCard   = $('overlayCard');
+const opacitySlider = $('opacitySlider');
+const opacityVal    = $('opacityVal');
+const shadowToggle  = $('shadowToggle');
+const overlayHud    = $('overlayHud');
+
+/* ─────────────────────────────────────────────
+   STATE SERIALIZATION
+   ───────────────────────────────────────────── */
+function serializeState() {
+  return {
+    v: 2,
+    hue: state.hue, sat: state.sat, bright: state.bright,
+    paperColor: state.paperColor, style: state.style,
+    overlayKind: state.overlayKind, symbolName: state.symbolName,
+    useBrandColor: state.useBrandColor, text: state.text,
+    imageDataUrl: state.overlayKind === 'image' ? state.imageDataUrl : null,
+    ow: state.ow, oh: state.oh, ox: state.ox, oy: state.oy,
+    ratio: state.ratio, radius: state.radius, rotation: state.rotation,
+    opacity: state.opacity, shadow: state.shadow,
+  };
+}
+
+function applyState(s, opts = {}) {
+  if (!s) return;
+  state.hue = s.hue ?? 199;
+  state.sat = s.sat ?? 79;
+  state.bright = s.bright ?? 64;
+  state.paperColor = s.paperColor ?? '#FEFFFF';
+  state.style = s.style ?? 'empty';
+  state.useBrandColor = s.useBrandColor !== false;
+  state.text = s.text ?? '';
+  state.symbolName = s.symbolName ?? null;
+  state.imageDataUrl = s.imageDataUrl ?? null;
+  state.ow = s.ow ?? 280;
+  state.oh = s.oh ?? 280;
+  state.ox = s.ox ?? 512;
+  state.oy = s.oy ?? 660;
+  state.ratio = s.ratio ?? 1;
+  state.radius = s.radius ?? 0;
+  state.rotation = s.rotation ?? 0;
+  state.opacity = s.opacity ?? 1;
+  state.shadow = !!s.shadow;
+  state.overlayKind = s.overlayKind ?? null;
+  state.textActive = state.overlayKind === 'text';
+
+  // Reflect to UI controls
+  if (colorPicker) {
+    try { colorPicker.color.set({ h: state.hue, s: state.sat, l: state.bright }); } catch(e){}
+  }
+  if (paperColorPicker) {
+    try { paperColorPicker.color.hexString = state.paperColor; } catch(e){}
+  }
+  styleToggle.checked = state.style === 'filled';
+  updatePaperCardVisibility();
+  if (textInputEl) textInputEl.value = state.text || '';
+  if (opacitySlider) opacitySlider.value = Math.round(state.opacity * 100);
+  if (opacityVal) opacityVal.textContent = Math.round(state.opacity * 100) + '%';
+  if (shadowToggle) shadowToggle.checked = state.shadow;
+  syncHexInput();
+
+  // Rebuild overlay
+  if (state.overlayKind === 'symbol' && state.symbolName) {
+    const paths = resolveSymbolPaths(state.symbolName);
+    if (paths) {
+      const svg = buildSymbolSvg(paths, currentSymbolHex());
+      const img = new Image();
+      img.onload = () => { state.overlay = img; renderOverlay(); drawFolder(); updateOverlayCardVisibility(); };
+      img.src = svgToDataUrl(svg);
+    }
+  } else if (state.overlayKind === 'text' && state.text) {
+    const svg = buildTextSvg(state.text, currentSymbolHex());
+    const img = new Image();
+    img.onload = () => { state.overlay = img; renderOverlay(); drawFolder(); updateOverlayCardVisibility(); };
+    img.src = svgToDataUrl(svg);
+  } else if (state.overlayKind === 'image' && state.imageDataUrl) {
+    const img = new Image();
+    img.onload = () => { state.overlay = img; renderOverlay(); drawFolder(); updateOverlayCardVisibility(); };
+    img.src = state.imageDataUrl;
+  } else {
+    state.overlay = null;
+    state.overlayKind = null;
+    overlayImg.classList.remove('active');
+    overlayClose.classList.remove('show');
+    overlayResize.classList.remove('show');
+    for (const el of Object.values(radiusHandles)) el.classList.remove('show');
+    overlayRotate.classList.remove('show');
+    drawFolder();
+    updateOverlayCardVisibility();
+  }
+  updateActiveSymbolUI();
+  updateBrandColorBar();
+  if (!opts.skipPersist) persistState();
+}
+
+/* ─────────────────────────────────────────────
+   PERSISTENCE
+   ───────────────────────────────────────────── */
+const STORAGE_KEY = 'carpetero.state.v2';
+const RECENTS_KEY = 'carpetero.recents.v1';
+const THEME_KEY   = 'carpetero.theme.v1';
+
+let _persistTimer = null;
+function persistState() {
+  if (_persistTimer) clearTimeout(_persistTimer);
+  _persistTimer = setTimeout(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(serializeState())); }
+    catch (e) { /* quota / private mode — silent */ }
+  }, 250);
+}
+function loadPersistedState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) { return null; }
+}
+
+/* ─────────────────────────────────────────────
+   HISTORY (UNDO / REDO)
+   ───────────────────────────────────────────── */
+const history = {
+  past: [],
+  future: [],
+  capacity: 50,
+  _serialize(s) { return JSON.stringify(s); },
+  init() {
+    const snap = serializeState();
+    this.past = [snap];
+    this.future = [];
+    updateUndoRedoButtons();
+  },
+  snapshot() {
+    const snap = serializeState();
+    const top = this.past[this.past.length - 1];
+    if (top && this._serialize(top) === this._serialize(snap)) return;
+    this.past.push(snap);
+    if (this.past.length > this.capacity + 1) this.past.shift();
+    this.future.length = 0;
+    updateUndoRedoButtons();
+    persistState();
+  },
+  undo() {
+    if (this.past.length < 2) return;
+    const current = this.past.pop();
+    this.future.push(current);
+    const target = this.past[this.past.length - 1];
+    applyState(target);
+    updateUndoRedoButtons();
+  },
+  redo() {
+    if (!this.future.length) return;
+    const target = this.future.pop();
+    this.past.push(target);
+    applyState(target);
+    updateUndoRedoButtons();
+  }
+};
+
+let _snapTimer = null;
+function snapshotSoon(delay = 350) {
+  if (_snapTimer) clearTimeout(_snapTimer);
+  _snapTimer = setTimeout(() => { _snapTimer = null; history.snapshot(); }, delay);
+}
+
+function updateUndoRedoButtons() {
+  if (undoBtn) undoBtn.disabled = history.past.length < 2;
+  if (redoBtn) redoBtn.disabled = history.future.length === 0;
+}
+
+/* ─────────────────────────────────────────────
+   THEME (light / dark / auto)
+   ───────────────────────────────────────────── */
+const THEMES = ['auto', 'light', 'dark'];
+let currentTheme = localStorage.getItem(THEME_KEY) || 'auto';
+function applyTheme(t) {
+  currentTheme = t;
+  if (t === 'auto') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', t);
+  try { localStorage.setItem(THEME_KEY, t); } catch(e){}
+  if (themeBtn) {
+    themeBtn.classList.toggle('active', t !== 'auto');
+    themeBtn.setAttribute('aria-label', `Tema: ${t} (clic para cambiar)`);
+    themeBtn.title = `Tema: ${t} — clic para cambiar`;
+  }
+}
+applyTheme(currentTheme);
+themeBtn.addEventListener('click', () => {
+  const idx = THEMES.indexOf(currentTheme);
+  applyTheme(THEMES[(idx + 1) % THEMES.length]);
+});
+
+/* ─────────────────────────────────────────────
+   HEX INPUT (folder color)
+   ───────────────────────────────────────────── */
+function syncHexInput() {
+  if (!hexInput || !colorPicker) return;
+  const hex = colorPicker.color.hexString || '#5CBFEC';
+  if (document.activeElement !== hexInput) {
+    hexInput.value = hex.replace('#', '').toUpperCase();
+  }
+}
+hexInput.addEventListener('input', () => {
+  let v = hexInput.value.replace(/[^0-9a-f]/gi, '').slice(0, 6).toUpperCase();
+  if (v !== hexInput.value) hexInput.value = v;
+  if (v.length === 6 || v.length === 3) {
+    const full = v.length === 3 ? v.split('').map(c => c + c).join('') : v;
+    try {
+      colorPicker.color.hexString = '#' + full;
+      // colorPicker change handler updates state.hue/sat/bright + drawFolder
+    } catch(e){}
+  }
+});
+hexInput.addEventListener('blur', () => {
+  syncHexInput();
+  pushRecent(colorPicker.color.hexString);
+  history.snapshot();
+});
+hexInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { hexInput.blur(); }
+});
+
+/* ─────────────────────────────────────────────
+   FINDER PRESETS + RECENT COLORS
+   ───────────────────────────────────────────── */
+const FINDER_PRESETS = [
+  { hex: '#5CBFEC', name: 'Azul (predeterminado)' },
+  { hex: '#7DC4E9', name: 'Cielo' },
+  { hex: '#9DD3F0', name: 'Hielo' },
+  { hex: '#FFD479', name: 'Amarillo' },
+  { hex: '#FF9F47', name: 'Mandarina' },
+  { hex: '#FF7A6B', name: 'Rojo' },
+  { hex: '#E26EC9', name: 'Magenta' },
+  { hex: '#B47DEB', name: 'Lavanda' },
+  { hex: '#7BD389', name: 'Verde' },
+  { hex: '#A0A0A0', name: 'Gris' },
+];
+function renderPresets() {
+  if (!presetRow) return;
+  presetRow.innerHTML = '';
+  for (const p of FINDER_PRESETS) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'swatch';
+    btn.style.background = p.hex;
+    btn.title = `${p.name} (${p.hex})`;
+    btn.setAttribute('aria-label', `Aplicar color ${p.name}`);
+    btn.addEventListener('click', () => {
+      try { colorPicker.color.hexString = p.hex; } catch(e){}
+      pushRecent(p.hex);
+      history.snapshot();
+    });
+    presetRow.appendChild(btn);
+  }
+}
+function loadRecents() {
+  try {
+    const raw = localStorage.getItem(RECENTS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+function saveRecents(arr) {
+  try { localStorage.setItem(RECENTS_KEY, JSON.stringify(arr)); } catch(e){}
+}
+function pushRecent(hex) {
+  if (!hex) return;
+  hex = hex.toUpperCase();
+  let recents = loadRecents().filter(c => c.toUpperCase() !== hex);
+  recents.unshift(hex);
+  recents = recents.slice(0, 6);
+  saveRecents(recents);
+  renderRecents();
+}
+function renderRecents() {
+  if (!recentRow) return;
+  const recents = loadRecents();
+  recentRow.innerHTML = '';
+  if (!recents.length) { recentRow.hidden = true; return; }
+  recentRow.hidden = false;
+  for (const hex of recents) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'swatch';
+    btn.style.background = hex;
+    btn.title = `Reusar ${hex}`;
+    btn.setAttribute('aria-label', `Aplicar color reciente ${hex}`);
+    btn.addEventListener('click', () => {
+      try { colorPicker.color.hexString = hex; } catch(e){}
+      pushRecent(hex);
+      history.snapshot();
+    });
+    recentRow.appendChild(btn);
+  }
+}
+renderPresets();
+renderRecents();
+
+/* Sync hex input + capture recents on color picker changes */
+if (colorPicker) {
+  let recentTimer = null;
+  colorPicker.on('input:change', () => {
+    syncHexInput();
+    if (recentTimer) clearTimeout(recentTimer);
+    recentTimer = setTimeout(() => {
+      pushRecent(colorPicker.color.hexString);
+      history.snapshot();
+    }, 700);
+  });
+}
+
+/* ─────────────────────────────────────────────
+   OVERLAY OPACITY + SHADOW
+   ───────────────────────────────────────────── */
+function updateOverlayCardVisibility() {
+  if (!overlayCard) return;
+  overlayCard.style.display = state.overlay ? '' : 'none';
+}
+function applyOverlayVisualProps() {
+  if (!overlayImg) return;
+  overlayImg.style.opacity = state.opacity;
+  overlayImg.style.filter = state.shadow
+    ? 'drop-shadow(0 8px 16px rgba(0,0,0,0.30)) drop-shadow(0 2px 4px rgba(0,0,0,0.15))'
+    : '';
+}
+opacitySlider.addEventListener('input', () => {
+  state.opacity = +opacitySlider.value / 100;
+  opacityVal.textContent = Math.round(state.opacity * 100) + '%';
+  applyOverlayVisualProps();
+  snapshotSoon();
+});
+shadowToggle.addEventListener('change', () => {
+  state.shadow = shadowToggle.checked;
+  applyOverlayVisualProps();
+  history.snapshot();
+});
+
+/* Wrap renderOverlay to apply opacity / shadow + update HUD context */
+const _origRenderOverlay = renderOverlay;
+renderOverlay = function() {
+  _origRenderOverlay();
+  applyOverlayVisualProps();
+  updateOverlayCardVisibility();
+};
+
+/* Wrap drawOverlayRounded so canvas exports honor opacity & shadow */
+const _origDrawOverlayRounded = drawOverlayRounded;
+drawOverlayRounded = function(tCtx) {
+  tCtx.save();
+  tCtx.globalAlpha = state.opacity;
+  if (state.shadow) {
+    tCtx.shadowColor = 'rgba(0,0,0,0.32)';
+    tCtx.shadowBlur = 28;
+    tCtx.shadowOffsetX = 0;
+    tCtx.shadowOffsetY = 14;
+  }
+  _origDrawOverlayRounded(tCtx);
+  tCtx.restore();
+};
+
+/* ─────────────────────────────────────────────
+   LIVE HUD (px / °) during drag, resize, rotate, radius
+   ───────────────────────────────────────────── */
+function showHud(text) {
+  if (!overlayHud) return;
+  overlayHud.textContent = text;
+  overlayHud.classList.add('show');
+}
+function hideHud() {
+  if (!overlayHud) return;
+  overlayHud.classList.remove('show');
+}
+function fmtDeg(d) {
+  let n = Math.round(d);
+  if (n === -180) n = 180;
+  return n + '°';
+}
+function fmtSize() {
+  return `${Math.round(state.ow)} × ${Math.round(state.oh)} px`;
+}
+function fmtPos() {
+  return `${Math.round(state.ox)}, ${Math.round(state.oy)}`;
+}
+
+/* Hook into existing pointer flows by listening at document level — these
+   handlers run in addition to the existing IIFE handlers, no re-binding
+   required. */
+let _hudActiveOp = null;  // 'drag' | 'resize' | 'rotate' | 'radius'
+
+function setHudFor(op) { _hudActiveOp = op; updateHud(); }
+function updateHud() {
+  if (!_hudActiveOp || !state.overlay) return;
+  if (_hudActiveOp === 'drag')      showHud(fmtPos());
+  else if (_hudActiveOp === 'resize') showHud(fmtSize());
+  else if (_hudActiveOp === 'rotate') showHud(fmtDeg(state.rotation));
+  else if (_hudActiveOp === 'radius') showHud('r ' + Math.round(state.radius) + ' px');
+}
+
+/* Patch pointer-down handlers on each handle to flag op + update on move */
+overlayImg.addEventListener('mousedown',  () => setHudFor('drag'));
+overlayImg.addEventListener('touchstart', () => setHudFor('drag'), { passive: true });
+overlayResize.addEventListener('mousedown',  () => setHudFor('resize'));
+overlayResize.addEventListener('touchstart', () => setHudFor('resize'), { passive: true });
+overlayRotate.addEventListener('mousedown',  () => setHudFor('rotate'));
+overlayRotate.addEventListener('touchstart', () => setHudFor('rotate'), { passive: true });
+for (const h of Object.values(radiusHandles)) {
+  h.addEventListener('mousedown',  () => setHudFor('radius'));
+  h.addEventListener('touchstart', () => setHudFor('radius'), { passive: true });
+}
+
+document.addEventListener('mousemove', () => { if (_hudActiveOp) updateHud(); }, true);
+document.addEventListener('touchmove', () => { if (_hudActiveOp) updateHud(); }, { capture: true, passive: true });
+document.addEventListener('mouseup',   () => { if (_hudActiveOp) { _hudActiveOp = null; hideHud(); snapshotSoon(0); } }, true);
+document.addEventListener('touchend',  () => { if (_hudActiveOp) { _hudActiveOp = null; hideHud(); snapshotSoon(0); } }, true);
+
+/* ─────────────────────────────────────────────
+   IMAGE LOAD VALIDATION + DATA URL CAPTURE
+   ───────────────────────────────────────────── */
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024;  // 10 MB
+const _origLoadImage = loadImage;
+loadImage = function(file) {
+  if (!file) return;
+  if (!file.type || !file.type.startsWith('image/')) {
+    showToast('Tipo de archivo no soportado');
+    return;
+  }
+  if (file.size > MAX_IMAGE_BYTES) {
+    showToast('Imagen demasiado grande (máx. 10 MB)');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const dataUrl = e.target.result;
+    const img = new Image();
+    img.onload = function() {
+      state.overlay = img;
+      state.overlayKind = 'image';
+      state.imageDataUrl = dataUrl;
+      state.symbolName = null;
+      state.text = '';
+      state.textActive = false;
+      state.ratio = img.width / img.height;
+      state.ow = 280;
+      state.oh = 280 / state.ratio;
+      state.ox = 512;
+      state.oy = 660;
+      state.radius = 0;
+      state.rotation = 0;
+      const ti = document.getElementById('textInput');
+      if (ti) ti.value = '';
+      updateActiveSymbolUI();
+      renderOverlay();
+      drawFolder();
+      history.snapshot();
+    };
+    img.onerror = () => showToast('No se pudo cargar la imagen');
+    img.src = dataUrl;
+  };
+  reader.onerror = () => showToast('Error leyendo el archivo');
+  reader.readAsDataURL(file);
+};
+
+/* ─────────────────────────────────────────────
+   DROP-ON-PREVIEW
+   ───────────────────────────────────────────── */
+previewWrap.addEventListener('dragover', e => {
+  if (!e.dataTransfer || !e.dataTransfer.types.includes('Files')) return;
+  e.preventDefault();
+  previewWrap.classList.add('drop-target');
+});
+previewWrap.addEventListener('dragleave', e => {
+  if (!previewWrap.contains(e.relatedTarget)) previewWrap.classList.remove('drop-target');
+});
+previewWrap.addEventListener('drop', e => {
+  e.preventDefault();
+  previewWrap.classList.remove('drop-target');
+  const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+  if (f) loadImage(f);
+});
+
+/* ─────────────────────────────────────────────
+   EXPORT — multi-size PNG + SVG vectorial
+   ───────────────────────────────────────────── */
+function currentExportSize() {
+  return parseInt(sizeSelect.value, 10) || 1024;
+}
+function exportFilename(ext) {
+  let suffix = '';
+  if (state.overlayKind === 'symbol' && state.symbolName) {
+    const slug = state.symbolName.replace('brand:', '').replace(/[^a-z0-9-_]/gi, '');
+    if (slug) suffix = '-' + slug;
+  } else if (state.overlayKind === 'text' && state.text) {
+    const slug = state.text.toLowerCase().replace(/[^a-z0-9-_]/gi, '').slice(0, 16);
+    if (slug) suffix = '-' + slug;
+  }
+  const size = currentExportSize();
+  return `folder-icon${suffix}-${size}.${ext}`;
+}
+
+async function renderExportSized(size) {
+  const tmp = await svgToCanvas(size);
+  if (state.overlay) {
+    const tCtx = tmp.getContext('2d');
+    // Re-scale 1024-space ops down to `size`
+    const k = size / 1024;
+    tCtx.save();
+    tCtx.scale(k, k);
+    drawOverlayRounded(tCtx);
+    tCtx.restore();
+  }
+  return tmp;
+}
+
+/* Replace the original 1024-only download flow with size-aware versions.
+   The original code used addEventListener, so we must clone to strip the
+   old listener (otherwise both fire and you get double downloads). */
+const _origDownloadBtn = downloadBtn;
+const _newDownloadBtn = _origDownloadBtn.cloneNode(true);
+_origDownloadBtn.parentNode.replaceChild(_newDownloadBtn, _origDownloadBtn);
+const _origCopyBtn = copyBtn;
+const _newCopyBtn = _origCopyBtn.cloneNode(true);
+_origCopyBtn.parentNode.replaceChild(_newCopyBtn, _origCopyBtn);
+
+_newDownloadBtn.addEventListener('click', async function() {
+  try {
+    const size = currentExportSize();
+    const tmp = await renderExportSized(size);
+    tmp.toBlob(function(blob) {
+      if (!blob) { showToast('Error generando PNG'); return; }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = exportFilename('png');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast(`PNG ${size}×${size} descargado`);
+    }, 'image/png');
+  } catch (e) {
+    showToast('Error al exportar: ' + (e.message || 'desconocido'));
+  }
+});
+
+_newCopyBtn.addEventListener('click', async function() {
+  try {
+    const size = currentExportSize();
+    const tmp = await renderExportSized(size);
+    tmp.toBlob(function(blob) {
+      if (!blob) { showToast('Error generando PNG'); return; }
+      if (navigator.clipboard && navigator.clipboard.write && window.ClipboardItem) {
+        navigator.clipboard.write([
+          new ClipboardItem({ 'image/png': blob })
+        ]).then(() => {
+          showToast(`Copiado ${size}×${size} al portapapeles`);
+        }).catch(err => {
+          showToast('Error al copiar: ' + (err.message || 'permiso denegado'));
+        });
+      } else {
+        showToast('El navegador no soporta copiar imágenes');
+      }
+    }, 'image/png');
+  } catch (e) {
+    showToast('Error al copiar: ' + (e.message || 'desconocido'));
+  }
+});
+
+/* SVG export — embed overlay as <image href="dataUrl"> for fidelity */
+function buildExportSvg() {
+  const dispSvg = state.style === 'empty' ? svgDispEmpty : svgDispFilled;
+  const folderInner = dispSvg.innerHTML;
+  let defs = '';
+  let overlayMarkup = '';
+  if (state.overlay) {
+    const x = state.ox - state.ow / 2;
+    const y = state.oy - state.oh / 2;
+    const transform = state.rotation
+      ? ` transform="rotate(${state.rotation} ${state.ox} ${state.oy})"`
+      : '';
+    let clipAttr = '';
+    if (state.overlayKind === 'image' && state.radius > 0) {
+      const r = Math.min(state.radius, Math.min(state.ow, state.oh) / 2);
+      const id = 'cr_' + Math.random().toString(36).slice(2, 9);
+      defs += `<clipPath id="${id}"><rect x="${x}" y="${y}" width="${state.ow}" height="${state.oh}" rx="${r}" ry="${r}"/></clipPath>`;
+      clipAttr = ` clip-path="url(#${id})"`;
+    }
+    let filterAttr = '';
+    if (state.shadow) {
+      const fid = 'fs_' + Math.random().toString(36).slice(2, 9);
+      defs += `<filter id="${fid}" x="-30%" y="-30%" width="160%" height="160%">`
+            + `<feGaussianBlur in="SourceAlpha" stdDeviation="14"/>`
+            + `<feOffset dx="0" dy="14"/>`
+            + `<feComponentTransfer><feFuncA type="linear" slope="0.32"/></feComponentTransfer>`
+            + `<feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>`
+            + `</filter>`;
+      filterAttr = ` filter="url(#${fid})"`;
+    }
+    const opacityAttr = state.opacity != null && state.opacity < 1
+      ? ` opacity="${state.opacity}"`
+      : '';
+    overlayMarkup = `<image href="${state.overlay.src}" x="${x}" y="${y}" `
+      + `width="${state.ow}" height="${state.oh}" preserveAspectRatio="none"`
+      + `${transform}${clipAttr}${opacityAttr}${filterAttr}/>`;
+  }
+  const defsTag = defs ? `<defs>${defs}</defs>` : '';
+  return `<?xml version="1.0" encoding="UTF-8"?>\n`
+       + `<svg xmlns="http://www.w3.org/2000/svg" `
+       + `xmlns:xlink="http://www.w3.org/1999/xlink" `
+       + `viewBox="0 0 1024 1024" width="1024" height="1024">`
+       + `${defsTag}${folderInner}${overlayMarkup}</svg>`;
+}
+
+downloadSvgBtn.addEventListener('click', () => {
+  try {
+    const svg = buildExportSvg();
+    const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = exportFilename('svg').replace(/-\d+\./, '.');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('SVG descargado');
+  } catch (e) {
+    showToast('Error al exportar SVG: ' + (e.message || 'desconocido'));
+  }
+});
+
+/* ─────────────────────────────────────────────
+   STYLE TOGGLE / BRAND CHK / REMOVE → snapshot hooks
+   ───────────────────────────────────────────── */
+styleToggle.addEventListener('change', () => history.snapshot());
+useBrandChk.addEventListener('change', () => history.snapshot());
+
+/* Wrap removeOverlay so callers via the by-name binding (keyboard delete,
+   loadImage/loadSymbol/loadText fallbacks) trigger snapshot + cleanup of
+   our extension fields. The original close-button click handler was
+   registered with the original function reference, so we add a parallel
+   listener on the node to handle our extension cleanup when clicked. */
+const _origRemoveOverlay = removeOverlay;
+removeOverlay = function() {
+  _origRemoveOverlay();
+  state.imageDataUrl = null;
+  updateOverlayCardVisibility();
+  history.snapshot();
+};
+overlayClose.addEventListener('click', () => {
+  // The original listener on this button has already cleared state.overlay
+  // by the time this runs. We just clean up our extension fields and snap.
+  state.imageDataUrl = null;
+  updateOverlayCardVisibility();
+  history.snapshot();
+});
+
+/* ─────────────────────────────────────────────
+   loadSymbol / loadText → snapshot hooks (debounced)
+   ───────────────────────────────────────────── */
+const _origLoadSymbol = loadSymbol;
+loadSymbol = function(name) {
+  _origLoadSymbol(name);
+  // image.onload happens async — debounce snapshot so we capture final state
+  snapshotSoon(80);
+};
+const _origLoadText = loadText;
+loadText = function(text) {
+  _origLoadText(text);
+  snapshotSoon();  // debounced 350ms — only one snapshot per typing burst
+};
+// Re-bind the text input listener: original listener captured the original
+// loadText reference at registration. Add a parallel listener that ensures
+// our wrapper runs, but the original still works for actual rendering.
+// Actually the original listener calls loadText() by name — and since
+// `loadText` is a function declaration we just reassigned, the lookup
+// is dynamic, so the new wrapper runs. Same for loadSymbol.
+
+/* ─────────────────────────────────────────────
+   RESET
+   ───────────────────────────────────────────── */
+function resetAll() {
+  applyState({
+    v: 2,
+    hue: 199, sat: 79, bright: 64,
+    paperColor: '#FEFFFF', style: 'empty',
+    overlayKind: null, symbolName: null, useBrandColor: true,
+    text: '', imageDataUrl: null,
+    ow: 280, oh: 280, ox: 512, oy: 660,
+    ratio: 1, radius: 0, rotation: 0,
+    opacity: 1, shadow: false,
+  });
+  history.snapshot();
+  showToast('Restablecido');
+}
+resetBtn.addEventListener('click', () => {
+  if (history.past.length > 1 || state.overlay) {
+    if (!confirm('¿Restablecer todo? Se perderán los cambios actuales.')) return;
+  }
+  resetAll();
+});
+
+/* ─────────────────────────────────────────────
+   UNDO / REDO BUTTON
+   ───────────────────────────────────────────── */
+undoBtn.addEventListener('click', () => history.undo());
+redoBtn.addEventListener('click', () => history.redo());
+
+/* ─────────────────────────────────────────────
+   KEYBOARD SHORTCUTS
+   ───────────────────────────────────────────── */
+function isTextInputFocused() {
+  const el = document.activeElement;
+  if (!el) return false;
+  const tag = el.tagName;
+  if (tag === 'INPUT' && (el.type === 'text' || el.type === 'search' || el.type === 'email' || el.type === 'password' || el.type === 'number')) return true;
+  if (tag === 'TEXTAREA') return true;
+  if (el.isContentEditable) return true;
+  return false;
+}
+
+document.addEventListener('keydown', e => {
+  const meta = e.metaKey || e.ctrlKey;
+
+  // Undo / Redo
+  if (meta && !e.shiftKey && (e.key === 'z' || e.key === 'Z')) {
+    e.preventDefault(); history.undo(); return;
+  }
+  if (meta && (e.shiftKey && (e.key === 'z' || e.key === 'Z') || e.key === 'y' || e.key === 'Y')) {
+    e.preventDefault(); history.redo(); return;
+  }
+
+  // Save (Cmd+S) → download PNG
+  if (meta && (e.key === 's' || e.key === 'S')) {
+    e.preventDefault();
+    _newDownloadBtn.click();
+    return;
+  }
+
+  // Don't intercept other shortcuts when typing in a field
+  if (isTextInputFocused()) return;
+
+  // Esc → cancel eyedropper / blur active focus
+  if (e.key === 'Escape') {
+    if (eyedropperActive) {
+      // existing eyedropper Esc handler will fire too
+    }
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    return;
+  }
+
+  // Delete / Backspace → remove overlay
+  if ((e.key === 'Delete' || e.key === 'Backspace') && state.overlay) {
+    e.preventDefault();
+    removeOverlay();
+    return;
+  }
+
+  // Arrow nudge overlay (Shift = ×10)
+  if (state.overlay && e.key.startsWith('Arrow')) {
+    e.preventDefault();
+    const step = e.shiftKey ? 20 : 2;
+    if (e.key === 'ArrowUp')    state.oy -= step;
+    if (e.key === 'ArrowDown')  state.oy += step;
+    if (e.key === 'ArrowLeft')  state.ox -= step;
+    if (e.key === 'ArrowRight') state.ox += step;
+    renderOverlay();
+    snapshotSoon();
+    return;
+  }
+});
+
+/* ─────────────────────────────────────────────
+   SYMBOL GRID — keyboard navigation
+   ───────────────────────────────────────────── */
+symbolGridEl.addEventListener('keydown', e => {
+  const items = Array.from(symbolGridEl.querySelectorAll('.symbol-item'));
+  if (!items.length) return;
+  const cur = document.activeElement;
+  const idx = items.indexOf(cur);
+  if (idx === -1) return;
+  // Compute columns from grid layout
+  const gridStyle = getComputedStyle(symbolGridEl);
+  const cols = gridStyle.gridTemplateColumns.split(' ').length || 1;
+  let next = -1;
+  if (e.key === 'ArrowRight') next = idx + 1;
+  else if (e.key === 'ArrowLeft') next = idx - 1;
+  else if (e.key === 'ArrowDown') next = idx + cols;
+  else if (e.key === 'ArrowUp') next = idx - cols;
+  else if (e.key === 'Home') next = 0;
+  else if (e.key === 'End') next = items.length - 1;
+  if (next >= 0 && next < items.length) {
+    e.preventDefault();
+    items[next].focus();
+  }
+});
+
+/* ─────────────────────────────────────────────
+   DEFAULT COLOR BUTTONS → snapshot hooks
+   ───────────────────────────────────────────── */
+$('defaultColorBtn').addEventListener('click', () => { syncHexInput(); history.snapshot(); });
+$('paperDefaultColorBtn').addEventListener('click', () => { history.snapshot(); });
+
+/* ─────────────────────────────────────────────
+   RESTORE FROM STORAGE + INIT HISTORY
+   ───────────────────────────────────────────── */
+(function init() {
+  const persisted = loadPersistedState();
+  if (persisted) {
+    applyState(persisted, { skipPersist: true });
+  }
+  syncHexInput();
+  applyOverlayVisualProps();
+  updateOverlayCardVisibility();
+  history.init();
+})();
+
 </script>
 </body>
 </html>
