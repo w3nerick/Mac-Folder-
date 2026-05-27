@@ -98,12 +98,12 @@ body.eyedropper-mode, body.eyedropper-mode * {
 
 
 .app {
-  max-width: 1120px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 20px 40px 60px;
+  padding: 16px 32px 48px;
   display: flex;
   flex-direction: row-reverse;
-  gap: 28px;
+  gap: 24px;
   align-items: flex-start;
 }
 
@@ -112,16 +112,18 @@ body.eyedropper-mode, body.eyedropper-mode * {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   position: sticky;
-  top: 20px;
+  top: 16px;
   align-self: flex-start;
+  width: 420px;
 }
 
 .preview-wrap {
-  --preview-size: min(480px, calc(100vh - 200px));
-  width: var(--preview-size);
-  height: var(--preview-size);
+  --preview-size: 100%;
+  width: 100%;
+  aspect-ratio: 1;
+  height: auto;
   border-radius: 20px;
   background:
     repeating-conic-gradient(rgba(0,0,0,0.02) 0% 25%, transparent 0% 50%) 0 0 / 20px 20px,
@@ -253,7 +255,7 @@ body.eyedropper-mode, body.eyedropper-mode * {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 .controls-col .card-color {
   display: flex;
@@ -261,19 +263,21 @@ body.eyedropper-mode, body.eyedropper-mode * {
 }
 .color-cards-row {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  gap: 12px;
+  align-items: stretch;
 }
 .color-cards-row > .card-color {
-  padding: 16px 20px 18px;
+  flex: 1;
+  min-width: 0;
+  padding: 14px 16px 16px;
 }
 
 .card {
   background: rgba(255,255,255,0.72);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-radius: 16px;
-  padding: 16px 20px 18px;
+  border-radius: 14px;
+  padding: 14px 16px 16px;
   border: 1px solid rgba(255,255,255,0.5);
   position: relative;
   box-shadow: 0 2px 12px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
@@ -290,11 +294,11 @@ body.eyedropper-mode, body.eyedropper-mode * {
 /* Card titles -- iOS style small caps label */
 .card-title {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   color: var(--ink-3);
   display: flex;
   align-items: center;
@@ -641,8 +645,8 @@ body.eyedropper-mode, body.eyedropper-mode * {
 
 .color-tools {
   display: flex;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 6px;
+  margin-top: 8px;
 }
 .color-tools .tool-btn {
   flex: 1;
@@ -927,16 +931,16 @@ body.eyedropper-mode, body.eyedropper-mode * {
 .masthead {
   position: sticky;
   top: 0;
-  max-width: 1120px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 20px 40px 16px;
+  padding: 12px 32px;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  border-bottom: 1px solid rgba(60,60,67,0.12);
-  background: rgba(255,255,255,0.72);
+  gap: 16px;
+  border-bottom: 1px solid rgba(60,60,67,0.08);
+  background: rgba(255,255,255,0.82);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
@@ -944,9 +948,9 @@ body.eyedropper-mode, body.eyedropper-mode * {
   font-family: var(--font-display);
   font-weight: 700;
   font-style: normal;
-  font-size: 34px;
+  font-size: 26px;
   line-height: 1.1;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
   color: var(--ink);
   margin: 0;
   flex-shrink: 0;
@@ -985,78 +989,56 @@ body.eyedropper-mode, body.eyedropper-mode * {
    Responsive
    ============================================ */
 @media (max-width: 1000px) {
-  html, body {
-    height: auto;
-    overflow: visible;
-    overflow-x: hidden;
-  }
-  body {
-    min-height: 100vh;
-  }
   .app {
     flex-direction: column;
     align-items: center;
-    padding: 20px 20px 48px;
-    gap: 16px;
-    height: auto;
-    min-height: 0;
+    padding: 16px 16px 48px;
+    gap: 12px;
   }
   .preview-col {
     position: static;
     width: 100%;
-    max-width: 560px;
+    max-width: 480px;
   }
   .preview-wrap {
     width: 100%;
     height: auto;
     aspect-ratio: 1;
-    --preview-size: auto;
   }
   .controls-col {
     width: 100%;
-    max-width: 560px;
+    max-width: 480px;
+  }
+  .color-cards-row {
+    flex-direction: column;
   }
   .symbol-grid {
     flex: 0 1 auto;
-    min-height: 160px;
-    max-height: 46vh;
+    min-height: 140px;
+    max-height: 44vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   .masthead {
-    padding: 16px 20px 14px;
+    padding: 12px 16px;
   }
 }
 
 @media (max-width: 720px) {
-  .masthead h1 {
-    font-size: 28px;
-  }
-  .app {
-    padding: 16px 16px 44px;
-    gap: 16px;
-  }
-  .card {
-    padding: 14px 16px 16px;
-  }
-  .color-cards-row {
-    gap: 12px;
-  }
+  .masthead h1 { font-size: 22px; }
+  .card { padding: 12px 14px 14px; }
   .symbol-grid {
-    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
-    min-height: 140px;
-    max-height: 42vh;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    max-height: 40vh;
   }
 }
 
 @media (max-width: 420px) {
   .masthead {
-    padding: 14px 16px 12px;
-    gap: 12px;
+    padding: 10px 14px;
+    gap: 10px;
   }
-  .masthead h1 {
-    font-size: 24px;
-  }
+  .masthead h1 { font-size: 20px; }
 }
 
 /* ============================================
@@ -1068,9 +1050,9 @@ body.eyedropper-mode, body.eyedropper-mode * {
   gap: 4px;
 }
 .tb-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   border: none;
   background: rgba(118,118,128,0.12);
   color: var(--ink-2);
@@ -1108,8 +1090,8 @@ body.eyedropper-mode, body.eyedropper-mode * {
 .color-extras {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 6px;
+  margin-top: 8px;
 }
 .hex-row {
   display: flex;
