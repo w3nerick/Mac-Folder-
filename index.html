@@ -116,7 +116,7 @@ body.eyedropper-mode, body.eyedropper-mode * {
   position: sticky;
   top: 16px;
   align-self: flex-start;
-  width: 420px;
+  width: 360px;
 }
 
 .preview-wrap {
@@ -264,12 +264,12 @@ body.eyedropper-mode, body.eyedropper-mode * {
 .color-cards-row {
   display: flex;
   gap: 12px;
-  align-items: flex-start;
+  align-items: stretch;
 }
 .color-cards-row > .card-color {
   flex: 1;
   min-width: 0;
-  padding: 14px 16px 16px;
+  padding: 12px 14px 14px;
 }
 
 .card {
@@ -298,7 +298,7 @@ body.eyedropper-mode, body.eyedropper-mode * {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: var(--ink-3);
   display: flex;
   align-items: center;
@@ -640,13 +640,14 @@ body.eyedropper-mode, body.eyedropper-mode * {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 0;
+  padding: 4px 0;
+  max-height: 180px;
 }
 
 .color-tools {
   display: flex;
   gap: 6px;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 .color-tools .tool-btn {
   flex: 1;
@@ -656,14 +657,14 @@ body.eyedropper-mode, body.eyedropper-mode * {
 .tool-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
+  gap: 5px;
+  padding: 6px 10px;
   border: none;
   border-radius: 8px;
   background: rgba(0,0,0,0.04);
   color: var(--ink-2);
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0;
   cursor: pointer;
@@ -3078,9 +3079,7 @@ function initPaperColorPicker() {
    intrinsic height. */
 function pickerSizeFor(areaEl) {
   const r = areaEl.getBoundingClientRect();
-  // Reserve ~36px for the vertical hue slider + gap; clamp to a usable
-  // minimum so the picker stays functional even in a half-width card.
-  return Math.max(110, Math.floor(r.width - 40));
+  return Math.min(160, Math.max(110, Math.floor(r.width - 40)));
 }
 
 // Remember the last size we handed to iro.js so repeated ResizeObserver
