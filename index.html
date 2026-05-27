@@ -1400,6 +1400,132 @@ input:focus:not(:focus-visible) {
   outline: 3px dashed var(--accent);
   outline-offset: -8px;
 }
+
+/* ============================================
+   FAVORITES / PRESETS
+   ============================================ */
+.favorites-card { display: flex; flex-direction: column; gap: 10px; }
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 8px;
+}
+.fav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 8px 4px; border-radius: 12px; border: none;
+  background: rgba(118,118,128,0.06); cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.fav-item:hover { background: rgba(0,122,255,0.08); transform: scale(1.04); }
+.fav-swatch {
+  width: 32px; height: 32px; border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.fav-name {
+  font-size: 10px; color: var(--ink-3); font-weight: 500;
+  max-width: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  text-align: center;
+}
+.fav-save-row { display: flex; gap: 6px; align-items: center; }
+.fav-save-input {
+  flex: 1; padding: 6px 10px; border: none; border-radius: 8px;
+  background: rgba(118,118,128,0.12); font: inherit; font-size: 13px;
+  color: var(--ink); outline: none;
+}
+.fav-save-input:focus { box-shadow: 0 0 0 3px rgba(0,122,255,0.3); }
+.fav-save-btn {
+  padding: 6px 12px; border: none; border-radius: 8px;
+  background: var(--accent); color: #fff; font: inherit; font-size: 13px;
+  font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+.fav-empty { font-size: 13px; color: var(--ink-3); text-align: center; padding: 12px; }
+
+/* ============================================
+   INSPIRATION GALLERY
+   ============================================ */
+.inspo-card { overflow: hidden; }
+.inspo-header {
+  display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+  user-select: none;
+}
+.inspo-header .chevron {
+  width: 16px; height: 16px; transition: transform 0.2s;
+  stroke: var(--ink-3); fill: none;
+}
+.inspo-header.open .chevron { transform: rotate(180deg); }
+.inspo-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 8px; margin-top: 12px;
+}
+.inspo-grid[hidden] { display: none; }
+.inspo-item {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 10px 6px; border-radius: 12px; border: none;
+  background: rgba(118,118,128,0.06); cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.inspo-item:hover { background: rgba(0,122,255,0.08); transform: scale(1.03); }
+.inspo-color {
+  width: 36px; height: 36px; border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.inspo-label { font-size: 11px; font-weight: 500; color: var(--ink-2); }
+
+/* ============================================
+   EMOJI BUTTON
+   ============================================ */
+.emoji-btn {
+  width: 36px; height: 36px; border-radius: 10px; border: none;
+  background: rgba(118,118,128,0.12); cursor: pointer; font-size: 18px;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background 0.18s, transform 0.12s; flex-shrink: 0;
+}
+.emoji-btn:hover { background: rgba(0,122,255,0.12); transform: scale(1.08); }
+.text-row { display: flex; gap: 8px; align-items: center; }
+.text-row .text-input { flex: 1; }
+
+/* ============================================
+   SHORTCUTS MODAL
+   ============================================ */
+.shortcuts-modal {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none; transition: opacity 0.2s;
+}
+.shortcuts-modal.show { opacity: 1; pointer-events: all; }
+.shortcuts-panel {
+  background: var(--surface-solid); border-radius: 20px;
+  padding: 28px 32px; max-width: 380px; width: 90%;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+}
+.shortcuts-panel h2 {
+  font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--ink);
+}
+.shortcut-list { list-style: none; padding: 0; }
+.shortcut-list li {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0; border-bottom: 1px solid var(--rule);
+  font-size: 14px; color: var(--ink-2);
+}
+.shortcut-list li:last-child { border-bottom: none; }
+.shortcut-key {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  background: rgba(118,118,128,0.12); padding: 3px 8px; border-radius: 6px;
+  color: var(--ink);
+}
+
+/* ============================================
+   GRADIENT TOGGLE
+   ============================================ */
+.gradient-row {
+  display: flex; align-items: center; gap: 10px; margin-top: 10px;
+}
+.gradient-picker-wrap {
+  margin-top: 10px;
+}
+.gradient-picker-wrap[hidden] { display: none; }
 </style>
 </head>
 <body>
@@ -1488,6 +1614,9 @@ input:focus:not(:focus-visible) {
     <button class="tb-btn tb-toggle" id="themeBtn" aria-label="Cambiar tema (claro/oscuro/auto)" title="Tema (claro / oscuro / auto)">
       <svg viewBox="0 0 24 24" fill="none" id="themeIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
+    <button class="tb-btn" id="shortcutsBtn" aria-label="Atajos de teclado" title="Atajos de teclado (?)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 17v.01M12 14a1.5 1.5 0 1 0-1.14-2.47" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+    </button>
   </div>
 </header>
 
@@ -1557,6 +1686,20 @@ input:focus:not(:focus-visible) {
           <svg viewBox="0 0 16 16" fill="none"><path d="M3 12V8a5 5 0 0 1 10 0v4M5 9l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           SVG
         </button>
+        <button class="tool-btn" id="downloadIcnsBtn" title="Descargar pack .icns (multi-resolución)">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 11v3h12v-3M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          .icns
+        </button>
+      </div>
+    </div>
+
+    <!-- Favorites Card -->
+    <div class="card favorites-card">
+      <div class="card-title">Favoritos</div>
+      <div class="favorites-grid" id="favGrid"></div>
+      <div class="fav-save-row">
+        <input type="text" class="fav-save-input" id="favNameInput" placeholder="Nombre del preset" maxlength="16">
+        <button class="fav-save-btn" id="favSaveBtn">Guardar</button>
       </div>
     </div>
   </div>
@@ -1594,6 +1737,17 @@ input:focus:not(:focus-visible) {
               <div class="recent-row" id="recentRow" aria-label="Colores recientes"></div>
             </div>
             <div class="preset-row" id="presetRow" aria-label="Colores Finder de macOS"></div>
+            <div class="gradient-row">
+              <span class="toggle-label">Degradado</span>
+              <label class="ios-toggle" title="Activar degradado de color">
+                <input type="checkbox" id="gradientToggle">
+                <span class="track"></span>
+                <span class="thumb"></span>
+              </label>
+            </div>
+            <div class="gradient-picker-wrap" id="gradientPickerWrap" hidden>
+              <div id="gradientPicker"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1635,7 +1789,10 @@ input:focus:not(:focus-visible) {
     <!-- Text Overlay Card -->
     <div class="card">
       <div class="card-title">Texto</div>
-      <input type="text" class="text-input" id="textInput" placeholder="Escribe texto o números (ej: A, 2026, Hi)" maxlength="20" autocomplete="off">
+      <div class="text-row">
+        <input type="text" class="text-input" id="textInput" placeholder="Escribe texto o números (ej: A, 2026, Hi)" maxlength="20" autocomplete="off">
+        <button class="emoji-btn" id="emojiBtn" title="Insertar emoji" aria-label="Abrir selector de emojis">&#x1F600;</button>
+      </div>
     </div>
 
     <!-- Symbol / Brand Overlay Card -->
@@ -1657,6 +1814,15 @@ input:focus:not(:focus-visible) {
           <span class="brand-color-text">Usar color de marca <em id="brandColorTitle"></em></span>
         </label>
       </div>
+    </div>
+
+    <!-- Inspiration Gallery -->
+    <div class="card inspo-card">
+      <div class="inspo-header" id="inspoHeader">
+        <span class="card-title" style="margin:0">Inspiración</span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="inspo-grid" id="inspoGrid" hidden></div>
     </div>
 
     <!-- Overlay Adjustments (visible only when an overlay is active) -->
@@ -1688,6 +1854,22 @@ input:focus:not(:focus-visible) {
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
+
+<!-- Shortcuts Modal -->
+<div class="shortcuts-modal" id="shortcutsModal">
+  <div class="shortcuts-panel">
+    <h2>Atajos de teclado</h2>
+    <ul class="shortcut-list">
+      <li><span>Deshacer</span><span class="shortcut-key">⌘ Z</span></li>
+      <li><span>Rehacer</span><span class="shortcut-key">⌘ ⇧ Z</span></li>
+      <li><span>Copiar PNG</span><span class="shortcut-key">⌘ C</span></li>
+      <li><span>Descargar PNG</span><span class="shortcut-key">⌘ S</span></li>
+      <li><span>Eliminar gráfico</span><span class="shortcut-key">Supr</span></li>
+      <li><span>Cancelar cuentagotas</span><span class="shortcut-key">Esc</span></li>
+      <li><span>Mostrar atajos</span><span class="shortcut-key">?</span></li>
+    </ul>
+  </div>
+</div>
 
 <script>
 /* ════════════════════════════════════════
@@ -2766,15 +2948,28 @@ function recolorPaths(paths) {
   const hueShift = state.hue - BASE_HUE;
   const satRatio = BASE_SAT > 0 ? state.sat / BASE_SAT : 1;
   const lightShift = state.bright - BASE_LIGHT;
-  paths.forEach(({ el, origH, origS, origL, isWhite }) => {
+
+  const useGrad = state.gradient && state.gradientEnd;
+  let endHueShift, endSatRatio, endLightShift;
+  if (useGrad) {
+    endHueShift = state.gradientEnd.h - BASE_HUE;
+    endSatRatio = BASE_SAT > 0 ? state.gradientEnd.s / BASE_SAT : 1;
+    endLightShift = state.gradientEnd.l - BASE_LIGHT;
+  }
+  const total = paths.length || 1;
+
+  paths.forEach(({ el, origH, origS, origL, isWhite }, idx) => {
     if (isWhite) {
-      // "File" path — user-customizable color (default white)
       el.setAttribute('fill', state.paperColor || '#FEFFFF');
       return;
     }
-    const newH = (origH + hueShift + 360) % 360;
-    const newS = Math.max(0, Math.min(100, origS * satRatio));
-    const newL = Math.max(0, Math.min(100, origL + lightShift));
+    const t = useGrad ? idx / total : 0;
+    const hs = useGrad ? hueShift + (endHueShift - hueShift) * t : hueShift;
+    const sr = useGrad ? satRatio + (endSatRatio - satRatio) * t : satRatio;
+    const ls = useGrad ? lightShift + (endLightShift - lightShift) * t : lightShift;
+    const newH = (origH + hs + 360) % 360;
+    const newS = Math.max(0, Math.min(100, origS * sr));
+    const newL = Math.max(0, Math.min(100, origL + ls));
     el.setAttribute('fill', hslToHex(newH, newS, newL));
   });
 }
@@ -4897,6 +5092,270 @@ symbolGridEl.addEventListener('keydown', e => {
 $('defaultColorBtn').addEventListener('click', () => { syncHexInput(); history.snapshot(); });
 $('paperDefaultColorBtn').addEventListener('click', () => { history.snapshot(); });
 
+/* ═══════════════════════════════════════════════════════════════
+   NEW FEATURES: Favorites, Emoji, Inspiration, Shortcuts,
+   Multi-res export, Gradient
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────
+   FAVORITES / PRESETS
+   ───────────────────────────────────────────── */
+const FAV_KEY = 'carpetero_favorites';
+const favGrid = $('favGrid');
+const favNameInput = $('favNameInput');
+const favSaveBtn = $('favSaveBtn');
+
+function loadFavorites() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY)) || []; }
+  catch { return []; }
+}
+function saveFavorites(favs) {
+  try { localStorage.setItem(FAV_KEY, JSON.stringify(favs)); } catch {}
+}
+function renderFavorites() {
+  const favs = loadFavorites();
+  favGrid.innerHTML = '';
+  if (!favs.length) {
+    favGrid.innerHTML = '<div class="fav-empty">Guarda tu primera combinación</div>';
+    return;
+  }
+  favs.forEach((fav, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'fav-item';
+    btn.title = `${fav.name} (clic derecho para eliminar)`;
+    btn.innerHTML = `<div class="fav-swatch" style="background:${fav.color}"></div><span class="fav-name">${fav.name}</span>`;
+    btn.addEventListener('click', () => applyFavorite(fav));
+    btn.addEventListener('contextmenu', (e) => { e.preventDefault(); deleteFavorite(i); });
+    favGrid.appendChild(btn);
+  });
+}
+function applyFavorite(fav) {
+  if (fav.hue !== undefined) {
+    state.hue = fav.hue; state.sat = fav.sat; state.bright = fav.bright;
+    if (colorPicker) try { colorPicker.color.set({ h: state.hue, s: state.sat, l: state.bright }); } catch {}
+    syncHexInput(); drawFolder();
+  }
+  if (fav.symbolName) loadSymbol(fav.symbolName);
+  if (fav.paperColor) {
+    state.paperColor = fav.paperColor;
+    if (paperColorPicker) try { paperColorPicker.color.hexString = fav.paperColor; } catch {}
+  }
+  if (fav.gradient) {
+    state.gradient = true;
+    state.gradientEnd = fav.gradientEnd;
+    const gt = $('gradientToggle');
+    if (gt) gt.checked = true;
+    $('gradientPickerWrap').hidden = false;
+    drawFolder();
+  }
+  history.snapshot();
+  showToast('Preset aplicado');
+}
+function deleteFavorite(idx) {
+  const favs = loadFavorites();
+  favs.splice(idx, 1);
+  saveFavorites(favs);
+  renderFavorites();
+  showToast('Preset eliminado');
+}
+if (favSaveBtn) favSaveBtn.addEventListener('click', () => {
+  const name = (favNameInput.value || '').trim() || `Preset ${loadFavorites().length + 1}`;
+  const favs = loadFavorites();
+  if (favs.length >= 12) { showToast('Máximo 12 presets'); return; }
+  const hex = hexInput ? '#' + hexInput.value : '#5CBFEC';
+  favs.push({
+    name, color: hex,
+    hue: state.hue, sat: state.sat, bright: state.bright,
+    paperColor: state.paperColor,
+    symbolName: state.symbolName,
+    gradient: state.gradient || false,
+    gradientEnd: state.gradientEnd || null
+  });
+  saveFavorites(favs);
+  renderFavorites();
+  favNameInput.value = '';
+  showToast('Preset guardado');
+});
+renderFavorites();
+
+/* ─────────────────────────────────────────────
+   EMOJI PICKER (native)
+   ───────────────────────────────────────────── */
+const emojiBtn = $('emojiBtn');
+if (emojiBtn) emojiBtn.addEventListener('click', () => {
+  const textEl = $('textInput');
+  if (textEl) {
+    textEl.focus();
+    textEl.dispatchEvent(new Event('input'));
+  }
+  if (window.EyeDropper) {
+    showToast('Escribe un emoji con el teclado de emojis (Ctrl+⌘+Espacio)');
+  }
+  try {
+    const isMac = navigator.platform.indexOf('Mac') > -1;
+    if (isMac) {
+      showToast('Abre el selector: Ctrl + ⌘ + Espacio');
+    } else {
+      showToast('Abre el selector: Win + . (punto)');
+    }
+  } catch {}
+});
+
+/* ─────────────────────────────────────────────
+   INSPIRATION GALLERY
+   ───────────────────────────────────────────── */
+const INSPIRATIONS = [
+  { name: 'Developer', color: '#2D2D2D', symbol: 'code' },
+  { name: 'Design', color: '#8B5CF6', symbol: 'brand-figma' },
+  { name: 'Music', color: '#EC4899', symbol: 'music' },
+  { name: 'Photos', color: '#10B981', symbol: 'camera' },
+  { name: 'Finance', color: '#F59E0B', symbol: 'currency-dollar' },
+  { name: 'School', color: '#3B82F6', symbol: 'book' },
+  { name: 'Games', color: '#EF4444', symbol: 'device-gamepad-2' },
+  { name: 'Health', color: '#14B8A6', symbol: 'heart' },
+  { name: 'Travel', color: '#F97316', symbol: 'plane' },
+  { name: 'Social', color: '#6366F1', symbol: 'message' },
+  { name: 'Work', color: '#64748B', symbol: 'briefcase' },
+  { name: 'Security', color: '#059669', symbol: 'shield-check' },
+];
+
+const inspoGrid = $('inspoGrid');
+const inspoHeader = $('inspoHeader');
+if (inspoGrid) {
+  INSPIRATIONS.forEach(ins => {
+    const btn = document.createElement('button');
+    btn.className = 'inspo-item';
+    btn.innerHTML = `<div class="inspo-color" style="background:${ins.color}"></div><span class="inspo-label">${ins.name}</span>`;
+    btn.addEventListener('click', () => {
+      const hsl = hexToHsl(ins.color);
+      state.hue = hsl.h; state.sat = hsl.s; state.bright = hsl.l;
+      if (colorPicker) try { colorPicker.color.set({ h: hsl.h, s: hsl.s, l: hsl.l }); } catch {}
+      syncHexInput(); drawFolder();
+      if (ins.symbol) loadSymbol(ins.symbol.startsWith('brand-') ? 'brand:' + ins.symbol.replace('brand-','') : ins.symbol);
+      history.snapshot();
+      showToast(`Tema "${ins.name}" aplicado`);
+    });
+    inspoGrid.appendChild(btn);
+  });
+}
+if (inspoHeader) inspoHeader.addEventListener('click', () => {
+  const grid = $('inspoGrid');
+  const isHidden = grid.hidden;
+  grid.hidden = !isHidden;
+  inspoHeader.classList.toggle('open', isHidden);
+});
+
+/* ─────────────────────────────────────────────
+   SHORTCUTS MODAL
+   ───────────────────────────────────────────── */
+const shortcutsModal = $('shortcutsModal');
+const shortcutsBtn = $('shortcutsBtn');
+
+function toggleShortcutsModal(show) {
+  if (show === undefined) show = !shortcutsModal.classList.contains('show');
+  shortcutsModal.classList.toggle('show', show);
+}
+if (shortcutsBtn) shortcutsBtn.addEventListener('click', () => toggleShortcutsModal(true));
+if (shortcutsModal) {
+  shortcutsModal.addEventListener('click', (e) => {
+    if (e.target === shortcutsModal) toggleShortcutsModal(false);
+  });
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === '?' && !e.metaKey && !e.ctrlKey && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+    e.preventDefault();
+    toggleShortcutsModal();
+  }
+  if (e.key === 'Escape' && shortcutsModal.classList.contains('show')) {
+    toggleShortcutsModal(false);
+  }
+});
+
+/* ─────────────────────────────────────────────
+   MULTI-RESOLUTION .icns PACK EXPORT
+   ───────────────────────────────────────────── */
+const downloadIcnsBtn = $('downloadIcnsBtn');
+if (downloadIcnsBtn) downloadIcnsBtn.addEventListener('click', async () => {
+  showToast('Generando pack multi-resolución...');
+  const sizes = [16, 32, 64, 128, 256, 512, 1024];
+  const script = `#!/bin/bash
+# Carpetero — Genera .icns desde los PNGs exportados
+# Uso: coloca este script junto a los PNGs y ejecútalo
+set -e
+ICONSET="folder.iconset"
+mkdir -p "$ICONSET"
+cp icon_16x16.png "$ICONSET/icon_16x16.png"
+cp icon_32x32.png "$ICONSET/icon_16x16@2x.png"
+cp icon_32x32.png "$ICONSET/icon_32x32.png"
+cp icon_64x64.png "$ICONSET/icon_32x32@2x.png"
+cp icon_128x128.png "$ICONSET/icon_128x128.png"
+cp icon_256x256.png "$ICONSET/icon_128x128@2x.png"
+cp icon_256x256.png "$ICONSET/icon_256x256.png"
+cp icon_512x512.png "$ICONSET/icon_256x256@2x.png"
+cp icon_512x512.png "$ICONSET/icon_512x512.png"
+cp icon_1024x1024.png "$ICONSET/icon_512x512@2x.png"
+iconutil -c icns "$ICONSET"
+rm -rf "$ICONSET"
+echo "✓ folder.icns generado correctamente"
+`;
+  const blobs = [];
+  for (const size of sizes) {
+    const tmp = await svgToCanvas(size);
+    if (state.overlay) drawOverlayRounded(tmp.getContext('2d'));
+    const blob = await new Promise(r => tmp.toBlob(r, 'image/png'));
+    blobs.push({ name: `icon_${size}x${size}.png`, blob });
+  }
+  // Use JSZip-less approach: download as individual files + script
+  // Actually build a simple tar-like download — for max compat, download a shell script
+  const scriptBlob = new Blob([script], { type: 'text/x-shellscript' });
+
+  // Download each PNG
+  for (const { name, blob } of blobs) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    await new Promise(r => setTimeout(r, 100));
+  }
+  // Download script
+  const sUrl = URL.createObjectURL(scriptBlob);
+  const sa = document.createElement('a');
+  sa.href = sUrl; sa.download = 'make_icns.sh';
+  document.body.appendChild(sa); sa.click();
+  document.body.removeChild(sa);
+  URL.revokeObjectURL(sUrl);
+  showToast('Pack .icns descargado — ejecuta make_icns.sh');
+});
+
+/* ─────────────────────────────────────────────
+   GRADIENT
+   ───────────────────────────────────────────── */
+state.gradient = false;
+state.gradientEnd = { h: 260, s: 70, l: 55 };
+let gradientPicker = null;
+const gradientToggle = $('gradientToggle');
+const gradientPickerWrap = $('gradientPickerWrap');
+
+if (gradientToggle) gradientToggle.addEventListener('change', () => {
+  state.gradient = gradientToggle.checked;
+  gradientPickerWrap.hidden = !state.gradient;
+  if (state.gradient && !gradientPicker) {
+    gradientPicker = new iro.ColorPicker('#gradientPicker', {
+      width: 140, color: { h: state.gradientEnd.h, s: state.gradientEnd.s, l: state.gradientEnd.l },
+      layout: [{ component: iro.ui.Wheel }, { component: iro.ui.Slider, options: { sliderType: 'value' } }]
+    });
+    gradientPicker.on('color:change', (c) => {
+      state.gradientEnd = { h: c.hsl.h, s: c.hsl.s, l: c.hsl.l };
+      drawFolder();
+    });
+  }
+  drawFolder();
+  history.snapshot();
+});
+
+
 /* ─────────────────────────────────────────────
    RESTORE FROM STORAGE + INIT HISTORY
    ───────────────────────────────────────────── */
@@ -4909,6 +5368,7 @@ $('paperDefaultColorBtn').addEventListener('click', () => { history.snapshot(); 
   applyOverlayVisualProps();
   updateOverlayCardVisibility();
   history.init();
+  renderFavorites();
 })();
 
 </script>
