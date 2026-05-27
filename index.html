@@ -59,6 +59,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
 }
 
@@ -99,12 +100,11 @@ body.eyedropper-mode, body.eyedropper-mode * {
 .app {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 20px 40px 24px;
+  padding: 20px 40px 60px;
   display: flex;
   flex-direction: row-reverse;
-  gap: 24px;
+  gap: 28px;
   align-items: flex-start;
-  min-height: calc(100vh - var(--masthead-h, 72px));
 }
 
 /* -- Preview -- */
@@ -114,16 +114,12 @@ body.eyedropper-mode, body.eyedropper-mode * {
   flex-direction: column;
   gap: 16px;
   position: sticky;
-  top: 0;
+  top: 20px;
   align-self: flex-start;
-  max-height: calc(100vh - var(--masthead-h, 72px) - 40px);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-right: 4px;
 }
 
 .preview-wrap {
-  --preview-size: min(560px, calc(100vh - 260px));
+  --preview-size: min(480px, calc(100vh - 200px));
   width: var(--preview-size);
   height: var(--preview-size);
   border-radius: 20px;
@@ -258,9 +254,6 @@ body.eyedropper-mode, body.eyedropper-mode * {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-right: 4px;
 }
 .controls-col .card-color {
   display: flex;
@@ -268,24 +261,11 @@ body.eyedropper-mode, body.eyedropper-mode * {
 }
 .color-cards-row {
   display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: stretch;
-  flex-wrap: wrap;
-}
-.color-cards-row > .card-color > .card-title {
-  min-height: 32px;
 }
 .color-cards-row > .card-color {
-  flex: 1 1 180px;
-  min-width: 0;
-  padding: 16px;
-}
-.color-cards-row .color-tools { gap: 8px; }
-.color-cards-row .color-tools .tool-btn {
-  padding: 8px 10px;
-  gap: 6px;
-  white-space: nowrap;
-  font-size: 12px;
+  padding: 16px 20px 18px;
 }
 
 .card {
@@ -1025,9 +1005,6 @@ body.eyedropper-mode, body.eyedropper-mode * {
     position: static;
     width: 100%;
     max-width: 560px;
-    height: auto !important;
-    max-height: none;
-    overflow-y: visible;
   }
   .preview-wrap {
     width: 100%;
@@ -1038,8 +1015,6 @@ body.eyedropper-mode, body.eyedropper-mode * {
   .controls-col {
     width: 100%;
     max-width: 560px;
-    height: auto !important;
-    overflow-y: visible;
   }
   .symbol-grid {
     flex: 0 1 auto;
@@ -1066,10 +1041,6 @@ body.eyedropper-mode, body.eyedropper-mode * {
   }
   .color-cards-row {
     gap: 12px;
-  }
-  .color-cards-row > .card-color {
-    flex: 1 1 100%;
-    padding: 14px;
   }
   .symbol-grid {
     grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
@@ -1674,44 +1645,6 @@ input:focus:not(:focus-visible) {
       <input type="file" id="fileInput" accept="image/*">
     </div>
 
-    <!-- Export Card (below preview) -->
-    <div class="card">
-      <div class="card-title">Exportar</div>
-      <div class="export-row">
-        <button class="btn btn-primary" id="copyBtn" title="Copiar PNG (Ctrl/⌘+C)">Copiar al portapapeles</button>
-        <button class="btn btn-secondary" id="downloadBtn" title="Descargar PNG (Ctrl/⌘+S)">Descargar PNG</button>
-      </div>
-      <div class="export-options">
-        <span class="export-options-label">Tamaño</span>
-        <select id="sizeSelect" class="size-select" aria-label="Tamaño del PNG">
-          <option value="1024" selected>1024 px</option>
-          <option value="512">512 px</option>
-          <option value="256">256 px</option>
-          <option value="128">128 px</option>
-          <option value="64">64 px</option>
-          <option value="32">32 px</option>
-          <option value="16">16 px</option>
-        </select>
-        <button class="tool-btn" id="downloadSvgBtn" title="Descargar SVG vectorial">
-          <svg viewBox="0 0 16 16" fill="none"><path d="M3 12V8a5 5 0 0 1 10 0v4M5 9l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          SVG
-        </button>
-        <button class="tool-btn" id="downloadIcnsBtn" title="Descargar pack .icns (multi-resolución)">
-          <svg viewBox="0 0 16 16" fill="none"><path d="M2 11v3h12v-3M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          .icns
-        </button>
-      </div>
-    </div>
-
-    <!-- Favorites Card -->
-    <div class="card favorites-card">
-      <div class="card-title">Favoritos</div>
-      <div class="favorites-grid" id="favGrid"></div>
-      <div class="fav-save-row">
-        <input type="text" class="fav-save-input" id="favNameInput" placeholder="Nombre del preset" maxlength="16">
-        <button class="fav-save-btn" id="favSaveBtn">Guardar</button>
-      </div>
-    </div>
   </div>
 
   <!-- Controls Column -->
@@ -1850,6 +1783,45 @@ input:focus:not(:focus-visible) {
           <span class="track"></span>
           <span class="thumb"></span>
         </label>
+      </div>
+    </div>
+
+    <!-- Export Card -->
+    <div class="card">
+      <div class="card-title">Exportar</div>
+      <div class="export-row">
+        <button class="btn btn-primary" id="copyBtn" title="Copiar PNG (Ctrl/⌘+C)">Copiar al portapapeles</button>
+        <button class="btn btn-secondary" id="downloadBtn" title="Descargar PNG (Ctrl/⌘+S)">Descargar PNG</button>
+      </div>
+      <div class="export-options">
+        <span class="export-options-label">Tamaño</span>
+        <select id="sizeSelect" class="size-select" aria-label="Tamaño del PNG">
+          <option value="1024" selected>1024 px</option>
+          <option value="512">512 px</option>
+          <option value="256">256 px</option>
+          <option value="128">128 px</option>
+          <option value="64">64 px</option>
+          <option value="32">32 px</option>
+          <option value="16">16 px</option>
+        </select>
+        <button class="tool-btn" id="downloadSvgBtn" title="Descargar SVG vectorial">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 12V8a5 5 0 0 1 10 0v4M5 9l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          SVG
+        </button>
+        <button class="tool-btn" id="downloadIcnsBtn" title="Descargar pack .icns (multi-resolución)">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 11v3h12v-3M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          .icns
+        </button>
+      </div>
+    </div>
+
+    <!-- Favorites Card -->
+    <div class="card favorites-card">
+      <div class="card-title">Favoritos</div>
+      <div class="favorites-grid" id="favGrid"></div>
+      <div class="fav-save-row">
+        <input type="text" class="fav-save-input" id="favNameInput" placeholder="Nombre del preset" maxlength="16">
+        <button class="fav-save-btn" id="favSaveBtn">Guardar</button>
       </div>
     </div>
 
@@ -3177,32 +3149,7 @@ function resizeColorPickers() {
    whole app past the preview height, and the grid never triggers its
    internal scroll. Pinning controls-col's height to preview-col's
    intrinsic height forces the grid to overflow → scroll instead. */
-(function lockControlsColHeight() {
-  const previewCol = document.querySelector('.preview-col');
-  const controlsCol = document.querySelector('.controls-col');
-  if (!previewCol || !controlsCol) return;
-  const MOBILE_BREAKPOINT = 1000;
-  function apply() {
-    if (window.innerWidth <= MOBILE_BREAKPOINT) {
-      controlsCol.style.maxHeight = '';
-      return;
-    }
-    controlsCol.style.maxHeight = '';
-    const h = previewCol.getBoundingClientRect().height;
-    controlsCol.style.maxHeight = Math.max(h, window.innerHeight - 120) + 'px';
-  }
-  apply();
-  if (typeof ResizeObserver !== 'undefined') {
-    let pending = false;
-    const ro = new ResizeObserver(() => {
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(() => { pending = false; apply(); });
-    });
-    ro.observe(previewCol);
-  }
-  window.addEventListener('resize', apply);
-})();
+// Layout is now scroll-based — no height locking needed
 
 function updatePaperCardVisibility() {
   // The paper card itself is ALWAYS visible — only its picker+tools
