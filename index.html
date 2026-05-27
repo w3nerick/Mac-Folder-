@@ -264,7 +264,7 @@ body.eyedropper-mode, body.eyedropper-mode * {
 .color-cards-row {
   display: flex;
   gap: 12px;
-  align-items: stretch;
+  align-items: flex-start;
 }
 .color-cards-row > .card-color {
   flex: 1;
@@ -1653,27 +1653,6 @@ input:focus:not(:focus-visible) {
               Restaurar color
             </button>
           </div>
-          <div class="color-extras">
-            <div class="hex-row">
-              <label class="hex-input-wrap" title="Color en hexadecimal">
-                <span class="hex-prefix">#</span>
-                <input type="text" class="hex-input" id="hexInput" maxlength="6" autocomplete="off" spellcheck="false" aria-label="Color de carpeta en hex">
-              </label>
-              <div class="recent-row" id="recentRow" aria-label="Colores recientes"></div>
-            </div>
-            <div class="preset-row" id="presetRow" aria-label="Colores Finder de macOS"></div>
-            <div class="gradient-row">
-              <span class="toggle-label">Degradado</span>
-              <label class="ios-toggle" title="Activar degradado de color">
-                <input type="checkbox" id="gradientToggle">
-                <span class="track"></span>
-                <span class="thumb"></span>
-              </label>
-            </div>
-            <div class="gradient-picker-wrap" id="gradientPickerWrap" hidden>
-              <div id="gradientPicker"></div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -1707,6 +1686,31 @@ input:focus:not(:focus-visible) {
               Restaurar color
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color Extras (hex, presets, gradient) -->
+    <div class="card" style="padding:10px 16px 12px">
+      <div class="color-extras" style="margin-top:0">
+        <div class="hex-row">
+          <label class="hex-input-wrap" title="Color en hexadecimal">
+            <span class="hex-prefix">#</span>
+            <input type="text" class="hex-input" id="hexInput" maxlength="6" autocomplete="off" spellcheck="false" aria-label="Color de carpeta en hex">
+          </label>
+          <div class="recent-row" id="recentRow" aria-label="Colores recientes"></div>
+        </div>
+        <div class="preset-row" id="presetRow" aria-label="Colores Finder de macOS"></div>
+        <div class="gradient-row">
+          <span class="toggle-label">Degradado</span>
+          <label class="ios-toggle" title="Activar degradado de color">
+            <input type="checkbox" id="gradientToggle">
+            <span class="track"></span>
+            <span class="thumb"></span>
+          </label>
+        </div>
+        <div class="gradient-picker-wrap" id="gradientPickerWrap" hidden>
+          <div id="gradientPicker"></div>
         </div>
       </div>
     </div>
