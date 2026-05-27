@@ -44,7 +44,8 @@
 html {
   background: var(--paper);
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
@@ -56,8 +57,8 @@ body {
   line-height: 1.47;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-x: hidden;
   position: relative;
 }
 
@@ -102,9 +103,8 @@ body.eyedropper-mode, body.eyedropper-mode * {
   display: flex;
   flex-direction: row-reverse;
   gap: 24px;
-  align-items: stretch;
-  height: calc(100vh - var(--masthead-h, 72px));
-  min-height: 0;
+  align-items: flex-start;
+  min-height: calc(100vh - var(--masthead-h, 72px));
 }
 
 /* -- Preview -- */
@@ -114,8 +114,12 @@ body.eyedropper-mode, body.eyedropper-mode * {
   flex-direction: column;
   gap: 16px;
   position: sticky;
-  top: 28px;
+  top: 0;
   align-self: flex-start;
+  max-height: calc(100vh - var(--masthead-h, 72px) - 40px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 4px;
 }
 
 .preview-wrap {
@@ -254,6 +258,9 @@ body.eyedropper-mode, body.eyedropper-mode * {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 4px;
 }
 .controls-col .card-color {
   display: flex;
@@ -1019,6 +1026,8 @@ body.eyedropper-mode, body.eyedropper-mode * {
     width: 100%;
     max-width: 560px;
     height: auto !important;
+    max-height: none;
+    overflow-y: visible;
   }
   .preview-wrap {
     width: 100%;
@@ -1030,6 +1039,7 @@ body.eyedropper-mode, body.eyedropper-mode * {
     width: 100%;
     max-width: 560px;
     height: auto !important;
+    overflow-y: visible;
   }
   .symbol-grid {
     flex: 0 1 auto;
@@ -3171,21 +3181,15 @@ function resizeColorPickers() {
   const previewCol = document.querySelector('.preview-col');
   const controlsCol = document.querySelector('.controls-col');
   if (!previewCol || !controlsCol) return;
-  // Skip the lock on the stacked (<=1000px) layout — matches the CSS
-  // breakpoint where .app switches to flex-direction: column and the page
-  // gains real vertical scroll. Below this, inner-panel height-locking
-  // would just fight the natural document flow.
   const MOBILE_BREAKPOINT = 1000;
   function apply() {
     if (window.innerWidth <= MOBILE_BREAKPOINT) {
-      controlsCol.style.height = '';
+      controlsCol.style.maxHeight = '';
       return;
     }
-    // Temporarily clear our own fix so we read preview-col's own height,
-    // not a height that's been clamped by our previous run.
-    controlsCol.style.height = '';
+    controlsCol.style.maxHeight = '';
     const h = previewCol.getBoundingClientRect().height;
-    controlsCol.style.height = h + 'px';
+    controlsCol.style.maxHeight = Math.max(h, window.innerHeight - 120) + 'px';
   }
   apply();
   if (typeof ResizeObserver !== 'undefined') {
